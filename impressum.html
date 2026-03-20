@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Impressum – Studytracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Source Sans 3', system-ui, sans-serif; background: #0a0a0a; color: #e0e0e0; line-height: 1.7; }
+
+        /* Nav */
+        .nav { position: sticky; top: 0; z-index: 100; padding: 0 32px; height: 68px; display: flex; align-items: center; background: rgba(10,10,10,.92); backdrop-filter: blur(16px); border-bottom: 1px solid rgba(255,255,255,.06); }
+        .nav-inner { max-width: 1080px; width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .nav-left { display: flex; align-items: center; gap: 48px; }
+        .nav-logo { font-size: 1.3rem; font-weight: 700; color: #fff; text-decoration: none; }
+        .nav-link { color: rgba(255,255,255,.7); text-decoration: none; font-size: 1.05rem; font-weight: 500; transition: color .15s; }
+        .nav-link:hover { color: #fff; }
+        .nav-btn { background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); border-radius: 20px; padding: 14px 36px; font-size: 1.05rem; font-weight: 600; color: #fff; text-decoration: none; font-family: inherit; transition: background .15s; }
+        .nav-btn:hover { background: rgba(255,255,255,.22); }
+
+        /* Content */
+        .page { max-width: 720px; margin: 0 auto; padding: 80px 32px 100px; }
+        .label { font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #00b87a; margin-bottom: 12px; }
+        h1 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; letter-spacing: -.025em; color: #f0f0f0; margin-bottom: 48px; }
+        h2 { font-size: 1.1rem; font-weight: 700; color: #ccc; margin: 36px 0 10px; }
+        p { font-size: .95rem; color: #777; margin-bottom: 10px; }
+        a { color: #00b87a; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .divider { border: none; border-top: 1px solid #1c1c1c; margin: 40px 0; }
+
+        /* Footer */
+        footer { background: #0a0a0a; border-top: 1px solid #1e1e1e; padding: 40px 32px; }
+        .footer-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+        .footer-copy { font-size: .78rem; color: #444; }
+        .footer-links { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; }
+        .footer-links a { font-size: .78rem; color: #555; text-decoration: none; transition: color .15s; }
+        .footer-links a:hover { color: #aaa; }
+    </style>
+</head>
+<body>
+
+<nav class="nav">
+    <div class="nav-inner">
+        <div class="nav-left">
+            <a href="index.html" class="nav-logo">Studytracker</a>
+            <a href="features.html" class="nav-link">Features</a>
+            <a href="about.html" class="nav-link">About</a>
+        </div>
+        <a href="index.html" class="nav-btn">Anmelden</a>
+    </div>
+</nav>
+
+<div class="page">
+    <p class="label">Rechtliches</p>
+    <h1>Impressum</h1>
+
+    <h2>Angaben gemäss Art. 3 Abs. 1 lit. s UWG</h2>
+    <p>Tobias Wipf</p>
+    <p>Sonnenhaldenstrasse 46</p>
+    <p>9008 St. Gallen</p>
+    <p>Schweiz</p>
+
+    <h2>Kontakt</h2>
+    <p>E-Mail: <a href="mailto:study.tracker.info@gmail.com">study.tracker.info@gmail.com</a></p>
+
+    <hr class="divider">
+
+    <h2>Haftungsausschluss</h2>
+    <p>Die Inhalte dieser Website wurden mit grösster Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte kann jedoch keine Gewähr übernommen werden.</p>
+
+    <h2>Datenschutz</h2>
+    <p>Die Nutzung von Studytracker erfordert eine Anmeldung über Google. Die dabei verarbeiteten Daten (Name, E-Mail-Adresse) werden ausschliesslich zur Identifikation des Nutzers und zur Synchronisation der Lerndaten verwendet. Es erfolgt keine Weitergabe an Dritte.</p>
+    <p>Die Lerndaten werden verschlüsselt in der Cloud gespeichert (Firebase von Google, USA). Google LLC hält gültige Datenschutzzertifizierungen (EU-U.S. Data Privacy Framework). Weitere Informationen unter <a href="https://firebase.google.com/support/privacy" target="_blank">firebase.google.com/support/privacy</a>.</p>
+
+    <h2>Urheberrecht</h2>
+    <p>Die durch den Seitenbetreiber erstellten Inhalte und Werke auf dieser Website unterliegen dem Urheberrecht. Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung ausserhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors.</p>
+
+    <hr class="divider">
+
+    <p style="color:#444;font-size:.82rem;">Stand: März 2026</p>
+</div>
+
+<footer>
+    <div class="footer-inner">
+        <span class="footer-copy">© 2026 Studytracker</span>
+        <nav class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="features.html">Features</a>
+            <a href="about.html">About</a>
+            <a href="impressum.html">Impressum</a>
+        </nav>
+    </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "appId": "ch.hsg.studytracker",
+  "appName": "Lernfortschritt",
+  "webDir": "www",
+  "server": {
+    "iosScheme": "https",
+    "androidScheme": "https"
+  },
+  "ios": {
+    "contentInset": "automatic"
+  }
+}

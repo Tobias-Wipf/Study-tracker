@@ -1,0 +1,31 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // User data - only the user themselves
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    // Feedback - require auth to prevent bot spam
+    match /feedback/{docId} {
+      allow create: if request.auth != null
+        && request.resource.data.keys().hasAll(['name', 'email', 'message'])
+        && request.resource.data.name is string
+        && request.resource.data.message is string
+        && request.resource.data.name.size() < 200
+        && request.resource.data.message.size() < 5000;
+    }
+    // Presets - anyone logged in can read and create, only author can update/delete
+    match /presets/{presetId} {
+      allow read: if request.auth != null;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null && (resource.data.authorUid == request.auth.uid || request.auth.uid == '5yMo1ANQR4gbyUXLBg0sy6d6o0I3');
+      allow delete: if request.auth != null && (resource.data.authorUid == request.auth.uid || request.auth.uid == '5yMo1ANQR4gbyUXLBg0sy6d6o0I3');
+
+      // Reports - each user can write their own report (doc ID = uid)
+      match /reports/{uid} {
+        allow read: if request.auth != null;
+        allow write: if request.auth != null && request.auth.uid == uid;
+      }
+    }
+  }
+}

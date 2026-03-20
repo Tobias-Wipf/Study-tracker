@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Studytracker">
+    <meta name="theme-color" content="#0f0f0f">
+    <meta name="description" content="Verfolge deinen Lernfortschritt, verwalte Aufgaben und behalte Prüfungstermine im Blick.">
+    <title>Studytracker</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="icon-192.png">
+    <!-- iOS splash screens -->
+    <link rel="apple-touch-startup-image" href="icon-512.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="icon-512.png" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="icon-512.png" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="icon-512.png" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="icon-512.png" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="icon-512.png" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="apple-touch-startup-image" href="icon-512.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" href="icon-512.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" href="icon-512.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="mobile.css">
+    <script src="https://www.gstatic.com/firebasejs/12.10.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.10.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.10.0/firebase-app-check-compat.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+</head>
+<body>
+
+<!-- ===================== LANDING PAGE ===================== -->
+<div id="landing" style="display:none">
+
+    <nav class="lp-nav" id="lp-nav">
+        <div class="lp-nav-inner">
+            <div class="lp-nav-left">
+                <span class="lp-logo">Studytracker</span>
+                <a href="features.html" class="lp-nav-link">Features</a>
+                <a href="features.html#how-it-works" class="lp-nav-link" data-i18n="nav.hiw">How it works</a>
+                <a href="index.html#faq" class="lp-nav-link">FAQ</a>
+                <a href="about.html" class="lp-nav-link">About</a>
+            </div>
+            <div class="lp-nav-right">
+                <button class="lp-lang-toggle" id="lang-toggle">EN</button>
+                <button class="lp-nav-btn" id="lp-nav-signin" data-i18n="nav.signin">Anmelden</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero with campus background -->
+    <section class="lp-hero lp-hero--image">
+        <img src="campus.jpg" alt="Campus" class="lp-hero-bg">
+        <div class="lp-hero-bg-overlay"></div>
+        <div class="lp-hero-content lp-animate">
+            <p class="lp-eyebrow" data-i18n="i.hero.eyebrow">Für Studierende</p>
+            <h1 class="lp-headline" data-i18n-html="i.hero.headline">Progress, Simplified.</h1>
+            <p class="lp-subhead" data-i18n="i.hero.subhead">Verfolge deinen Lernfortschritt, verwalte deine Aufgaben und behalte alle Prüfungstermine im Blick — auf all deinen Geräten.</p>
+            <button class="lp-cta-btn" id="lp-hero-signin">
+                <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 6.293C4.672 4.166 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+                <span data-i18n="i.hero.cta">Mit Google anmelden</span>
+            </button>
+        </div>
+        <div class="lp-hero-visual lp-animate lp-animate--delay">
+            <div class="lp-mockup">
+                <div class="lp-mockup-bar">
+                    <span class="lp-mockup-dot"></span>
+                    <span class="lp-mockup-dot"></span>
+                    <span class="lp-mockup-dot"></span>
+                    <span class="lp-mockup-url">studytracker.app</span>
+                </div>
+                <div class="lp-mockup-body">
+                    <div class="lp-mockup-header">
+                        <span class="lp-mockup-logo">Studytracker</span>
+                        <span class="lp-mockup-tabs">
+                            <span class="lp-mockup-tab lp-mockup-tab--active">Übersicht</span>
+                            <span class="lp-mockup-tab">VWL</span>
+                            <span class="lp-mockup-tab">Mathe</span>
+                        </span>
+                    </div>
+                    <div class="lp-mockup-content">
+                        <div class="lp-mockup-stats">
+                            <div class="lp-mockup-stat"><span class="lp-mockup-stat-num" style="color:#006849">12</span><span data-i18n="i.mock.done">Fertig</span></div>
+                            <div class="lp-mockup-stat"><span class="lp-mockup-stat-num" style="color:#d4a843">5</span><span data-i18n="i.mock.prog">In Arbeit</span></div>
+                            <div class="lp-mockup-stat"><span class="lp-mockup-stat-num" style="color:#dc2626">8</span><span data-i18n="i.mock.open">Offen</span></div>
+                        </div>
+                        <div class="lp-mockup-rows">
+                            <div class="lp-mockup-row">
+                                <span class="lp-mockup-row-label">VWL</span>
+                                <div class="lp-mockup-progress"><div style="width:72%;background:#006849"></div></div>
+                                <span class="lp-mockup-row-pct">72%</span>
+                            </div>
+                            <div class="lp-mockup-row">
+                                <span class="lp-mockup-row-label">Mathematik</span>
+                                <div class="lp-mockup-progress"><div style="width:48%;background:#d4a843"></div></div>
+                                <span class="lp-mockup-row-pct">48%</span>
+                            </div>
+                            <div class="lp-mockup-row">
+                                <span class="lp-mockup-row-label">BWL</span>
+                                <div class="lp-mockup-progress"><div style="width:85%;background:#006849"></div></div>
+                                <span class="lp-mockup-row-pct">85%</span>
+                            </div>
+                            <div class="lp-mockup-row">
+                                <span class="lp-mockup-row-label">Recht</span>
+                                <div class="lp-mockup-progress"><div style="width:31%;background:#dc2626"></div></div>
+                                <span class="lp-mockup-row-pct">31%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="lp-features">
+        <div class="lp-features-inner">
+            <p class="lp-eyebrow lp-animate" data-i18n="i.fs.eyebrow">Funktionen</p>
+            <h2 class="lp-section-title lp-animate" data-i18n="i.fs.title">Alles, was du brauchst.</h2>
+            <div class="lp-features-grid">
+                <div class="lp-feature-card lp-animate">
+                    <div class="lp-feature-icon">📊</div>
+                    <h3 data-i18n="i.f1.title">Fortschritt tracken</h3>
+                    <p data-i18n="i.f1.desc">Behalte den Überblick über alle Fächer, Themen und Lernkategorien auf einen Blick.</p>
+                </div>
+                <div class="lp-feature-card lp-animate">
+                    <div class="lp-feature-icon">📈</div>
+                    <h3 data-i18n="i.f8.title">Fortschritt über Zeit</h3>
+                    <p data-i18n="i.f8.desc">Verfolge deinen Lernfortschritt mit interaktiven Charts — sieh genau, wie du dich über Tage und Wochen verbesserst.</p>
+                </div>
+                <div class="lp-feature-card lp-animate">
+                    <div class="lp-feature-icon">☁️</div>
+                    <h3 data-i18n="i.f2.title">Überall dabei</h3>
+                    <p data-i18n="i.f2.desc">Deine Daten werden automatisch mit der Cloud synchronisiert — auf jedem Gerät, immer aktuell.</p>
+                </div>
+                <div class="lp-feature-card lp-animate">
+                    <div class="lp-feature-icon">✅</div>
+                    <h3 data-i18n="i.f3.title">To-Do Liste</h3>
+                    <p data-i18n="i.f3.desc">Erstelle Aufgaben mit Priorität, Fälligkeitsdatum und Fach-Zuordnung — alles an einem Ort.</p>
+                </div>
+                <div class="lp-feature-card lp-animate">
+                    <div class="lp-feature-icon">⏰</div>
+                    <h3 data-i18n="i.f5.title">Prüfungs-Countdown</h3>
+                    <p data-i18n="i.f5.desc">Sieh auf einen Blick, wie viele Tage bis zur nächsten Prüfung noch bleiben.</p>
+                </div>
+                <div class="lp-feature-card lp-animate">
+                    <div class="lp-feature-icon">📤</div>
+                    <h3 data-i18n="i.f7.title">Vorlagen teilen</h3>
+                    <p data-i18n="i.f7.desc">Teile deine Fächer-Struktur mit Kommilitonen oder importiere fertige Vorlagen — auch aus Excel-Dateien oder Bildern per OCR.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FAQ -->
+    <section class="lp-faq" id="faq">
+        <div class="lp-faq-inner">
+            <p class="lp-eyebrow lp-animate" data-i18n="i.faq.eyebrow">FAQ</p>
+            <h2 class="lp-section-title lp-animate" data-i18n="i.faq.title">Häufige Fragen.</h2>
+            <div class="lp-faq-list">
+                <div class="lp-faq-item lp-animate">
+                    <button class="lp-faq-q"><span data-i18n="i.faq.q1">Ist Studytracker kostenlos?</span><span class="lp-faq-icon">+</span></button>
+                    <div class="lp-faq-a" data-i18n="i.faq.a1">Ja, Studytracker ist vollständig kostenlos. Kein Abo, keine versteckten Kosten.</div>
+                </div>
+                <div class="lp-faq-item lp-animate">
+                    <button class="lp-faq-q"><span data-i18n="i.faq.q2">Brauche ich ein Google-Konto?</span><span class="lp-faq-icon">+</span></button>
+                    <div class="lp-faq-a" data-i18n="i.faq.a2">Ja, die Anmeldung erfolgt über Google. So sind deine Daten sicher gespeichert und auf allen Geräten synchronisiert.</div>
+                </div>
+                <div class="lp-faq-item lp-animate">
+                    <button class="lp-faq-q"><span data-i18n="i.faq.q3">Werden meine Daten gespeichert?</span><span class="lp-faq-icon">+</span></button>
+                    <div class="lp-faq-a" data-i18n="i.faq.a3">Ja. Deine Daten werden verschlüsselt in der Cloud gespeichert (Firebase von Google) und sind nur für dich sichtbar. Du kannst dich auf jedem Gerät anmelden und dein Fortschritt ist sofort da.</div>
+                </div>
+                <div class="lp-faq-item lp-animate">
+                    <button class="lp-faq-q"><span data-i18n="i.faq.q4">Funktioniert Studytracker auf dem Handy?</span><span class="lp-faq-icon">+</span></button>
+                    <div class="lp-faq-a" data-i18n="i.faq.a4">Ja. Auf dem iPhone kannst du Studytracker als App installieren — mit eigenem Icon, Vollbild-Modus und Offline-Zugriff. Öffne die Seite in Safari, tippe auf „Teilen" und dann „Zum Home-Bildschirm". Am Desktop funktioniert Studytracker direkt im Browser.</div>
+                </div>
+                <div class="lp-faq-item lp-animate">
+                    <button class="lp-faq-q"><span data-i18n="i.faq.q5">Kann ich meine Fächer selbst anpassen?</span><span class="lp-faq-icon">+</span></button>
+                    <div class="lp-faq-a" data-i18n="i.faq.a5">Ja. Du kannst Fächer, Themen und Kategorien frei hinzufügen, umbenennen und löschen — komplett auf dein Studium zugeschnitten.</div>
+                </div>
+                <div class="lp-faq-item lp-animate">
+                    <button class="lp-faq-q"><span data-i18n="i.faq.q6">Gibt es eine To-Do-Funktion?</span><span class="lp-faq-icon">+</span></button>
+                    <div class="lp-faq-a" data-i18n="i.faq.a6">Ja. Du kannst Aufgaben mit Priorität, Fälligkeitsdatum und Fach-Zuordnung erstellen. Offene und erledigte Aufgaben werden übersichtlich dargestellt.</div>
+                </div>
+                <div class="lp-faq-item lp-animate">
+                    <button class="lp-faq-q"><span data-i18n="i.faq.q7">Was sind Vorlagen und wie funktionieren sie?</span><span class="lp-faq-icon">+</span></button>
+                    <div class="lp-faq-a" data-i18n="i.faq.a7">Vorlagen sind fertige Fächer-Strukturen mit Themen, Kategorien und Prüfungsterminen, die du von anderen Studierenden übernehmen kannst. Du kannst auch eigene Vorlagen teilen, damit deine Kommilitonen nicht alles nochmal anlegen müssen. Zusätzlich kannst du Vorlagen aus Excel-Dateien oder sogar Bildern (per OCR) importieren.</div>
+                </div>
+                <div class="lp-faq-item lp-animate">
+                    <button class="lp-faq-q"><span data-i18n="i.faq.q8">Wie installiere ich Studytracker auf dem iPhone?</span><span class="lp-faq-icon">+</span></button>
+                    <div class="lp-faq-a" data-i18n="i.faq.a8">Öffne study-tracker.org in Safari, tippe auf das Teilen-Symbol (Quadrat mit Pfeil nach oben), scrolle nach unten und wähle „Zum Home-Bildschirm". Tippe auf „Hinzufügen" — fertig! Die App erscheint als Icon auf deinem Home-Bildschirm und läuft im Vollbild wie eine native App.</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="lp-cta-section">
+        <div class="lp-cta-inner lp-animate">
+            <h2 data-i18n="i.cta.title">Bereit anzufangen?</h2>
+            <p data-i18n="i.cta.desc">Kostenlos. Einfach anmelden und loslegen.</p>
+            <button class="lp-cta-btn lp-cta-btn--large" id="lp-bottom-signin">
+                <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 6.293C4.672 4.166 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+                <span data-i18n="i.cta.btn">Mit Google anmelden</span>
+            </button>
+        </div>
+    </section>
+
+    <footer class="lp-footer">
+        <div class="lp-footer-inner">
+            <span class="lp-footer-copy" data-i18n="i.footer">© 2026 Studytracker</span>
+            <nav class="lp-footer-links">
+                <a href="index.html">Home</a>
+                <a href="features.html">Features</a>
+                <a href="about.html">About</a>
+                <a href="impressum.html">Impressum</a>
+            </nav>
+        </div>
+    </footer>
+</div>
+
+<!-- ===================== APP ===================== -->
+<div id="app-wrapper" style="display:none">
+    <header class="hsg-header">
+        <div class="header-inner">
+            <div class="header-brand">
+                <span class="header-logo">Studytracker</span>
+            </div>
+            <div class="header-actions">
+                <span id="sync-status" class="sync-status sync-status--idle"></span>
+                <button class="header-btn" id="header-preset-btn" title="Vorlagen">📚 Vorlagen</button>
+                <button class="header-btn" id="app-lang-toggle" title="Language">🌐 EN</button>
+                <button class="header-btn" id="dark-mode-toggle" title="Dark Mode">🌙</button>
+                <div id="auth-area">
+                    <button class="header-btn auth-login-btn" id="login-btn">Anmelden ☁</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="hsg-nav">
+        <div class="nav-inner" id="nav-tabs"></div>
+    </nav>
+
+    <main class="content">
+        <div id="study-next-card"></div>
+        <div id="tab-sections"></div>
+    </main>
+
+    <footer class="hsg-footer">
+        <div class="footer-inner">Studytracker</div>
+    </footer>
+
+    <!-- Mobile App (hidden on desktop) -->
+    <div id="mobile-app" style="display:none">
+        <div id="mobile-view"></div>
+        <nav id="mobile-tab-bar"></nav>
+    </div>
+</div>
+
+<!-- Modal + Toast (always in DOM) -->
+<div class="modal-backdrop" id="modal-backdrop" style="display:none">
+    <div class="modal" id="modal"></div>
+</div>
+<div id="toast-container"></div>
+
+<script src="i18n.js"></script>
+<script src="app.js"></script>
+<script src="presets.js"></script>
+<script>
+    // FAQ accordion
+    document.querySelectorAll('.lp-faq-q').forEach(function(btn) {
+        btn.onclick = function() {
+            var item = btn.parentElement;
+            var isOpen = item.classList.contains('open');
+            document.querySelectorAll('.lp-faq-item.open').forEach(function(el) { el.classList.remove('open'); });
+            if (!isOpen) item.classList.add('open');
+        };
+    });
+
+    // Scroll animations
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+            if (e.isIntersecting) { e.target.classList.add('lp-visible'); }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.lp-animate').forEach(function(el) { observer.observe(el); });
+
+    // Sticky nav shadow
+    window.addEventListener('scroll', function() {
+        var nav = document.getElementById('lp-nav');
+        if (nav) nav.classList.toggle('lp-nav--scrolled', window.scrollY > 10);
+    });
+
+    // Register service worker
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('sw.js');
+    }
+</script>
+<script src="mobile.js"></script>
+</body>
+</html>
