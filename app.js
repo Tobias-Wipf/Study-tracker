@@ -62,6 +62,8 @@ var APP_T = {
         'progress.over.time': 'Fortschritt \u00fcber Zeit',
         'total.progress': 'GESAMT FORTSCHRITT',
         'total': 'Gesamt',
+        'open': 'Offen',
+        'stats.title': 'Abgeschlossene Themen',
         'subject': 'Fach',
         'subjects': 'F\u00e4cher',
         'topic': 'Thema',
@@ -141,7 +143,20 @@ var APP_T = {
         'onboarding.add': 'Fach hinzuf\u00fcgen',
         'onboarding.add.desc': 'Erstelle deine F\u00e4cher manuell \u2014 du bestimmst Name, Kategorien und Themen selbst. Ideal wenn du ein individuelles Setup brauchst.',
         'onboarding.preset': 'Vorlage laden',
-        'onboarding.preset.desc': 'Lade eine fertige Vorlage von anderen Studierenden \u2014 mit allen F\u00e4chern, Themen und Kategorien. In Sekunden startklar.'
+        'onboarding.preset.desc': 'Lade eine fertige Vorlage von anderen Studierenden \u2014 mit allen F\u00e4chern, Themen und Kategorien. In Sekunden startklar.',
+        'settings': 'Einstellungen',
+        'account': 'Konto',
+        'appearance': 'Darstellung',
+        'data': 'Daten',
+        'all': 'Alle',
+        'sort.by': 'Sortieren nach:',
+        'add.task': '+ Aufgabe',
+        'day.sun': 'Sonntag', 'day.mon': 'Montag', 'day.tue': 'Dienstag', 'day.wed': 'Mittwoch', 'day.thu': 'Donnerstag', 'day.fri': 'Freitag', 'day.sat': 'Samstag',
+        'mon.jan': 'Januar', 'mon.feb': 'Februar', 'mon.mar': 'M\u00e4rz', 'mon.apr': 'April', 'mon.may': 'Mai', 'mon.jun': 'Juni', 'mon.jul': 'Juli', 'mon.aug': 'August', 'mon.sep': 'September', 'mon.oct': 'Oktober', 'mon.nov': 'November', 'mon.dec': 'Dezember',
+        'prio.select': 'Priorit\u00e4t w\u00e4hlen\u2026',
+        'prio.high': '\ud83d\udd34 Hoch',
+        'prio.medium': '\ud83d\udfe1 Mittel',
+        'prio.low': '\ud83d\udfe2 Niedrig'
     },
     en: {
         'overview': 'Overview',
@@ -149,6 +164,8 @@ var APP_T = {
         'progress.over.time': 'Progress over time',
         'total.progress': 'TOTAL PROGRESS',
         'total': 'Total',
+        'open': 'Open',
+        'stats.title': 'Completed Topics',
         'subject': 'Subject',
         'subjects': 'Subjects',
         'topic': 'Topic',
@@ -228,7 +245,20 @@ var APP_T = {
         'onboarding.add': 'Add subject',
         'onboarding.add.desc': 'Create your subjects manually \u2014 you decide the name, categories and topics. Ideal for a custom setup.',
         'onboarding.preset': 'Load template',
-        'onboarding.preset.desc': 'Load a ready-made template from other students \u2014 with all subjects, topics and categories. Ready in seconds.'
+        'onboarding.preset.desc': 'Load a ready-made template from other students \u2014 with all subjects, topics and categories. Ready in seconds.',
+        'settings': 'Settings',
+        'account': 'Account',
+        'appearance': 'Appearance',
+        'data': 'Data',
+        'all': 'All',
+        'sort.by': 'Sort by:',
+        'add.task': '+ Task',
+        'day.sun': 'Sunday', 'day.mon': 'Monday', 'day.tue': 'Tuesday', 'day.wed': 'Wednesday', 'day.thu': 'Thursday', 'day.fri': 'Friday', 'day.sat': 'Saturday',
+        'mon.jan': 'January', 'mon.feb': 'February', 'mon.mar': 'March', 'mon.apr': 'April', 'mon.may': 'May', 'mon.jun': 'June', 'mon.jul': 'July', 'mon.aug': 'August', 'mon.sep': 'September', 'mon.oct': 'October', 'mon.nov': 'November', 'mon.dec': 'December',
+        'prio.select': 'Select priority\u2026',
+        'prio.high': '\ud83d\udd34 High',
+        'prio.medium': '\ud83d\udfe1 Medium',
+        'prio.low': '\ud83d\udfe2 Low'
     }
 };
 function t(key) { return (APP_T[APP_LANG] && APP_T[APP_LANG][key]) || key; }
@@ -537,7 +567,6 @@ function modalPrompt(title, placeholder, defaultVal, onSubmit) {
 }
 
 // ---- Toast / Undo system ----
-var undoStack = [];
 function showToast(msg, undoFn) {
     var tc = document.getElementById("toast-container");
     var t = document.createElement("div");
@@ -713,12 +742,13 @@ function renderOverview() {
     });
     var notStarted=totalTopics-doneTopics-progressTopics;
     var overallPct=totalTopics?Math.round(doneTopics/totalTopics*100):0;
+    h+='<div class="overview-stats-title">'+t('stats.title')+'</div>';
     h+='<div class="overview-stats">';
     h+='<div class="stat-card"><div class="stat-num pct-high">'+doneTopics+'</div><div class="stat-label">'+t('done')+'</div></div>';
     h+='<div class="stat-card"><div class="stat-num pct-mid">'+progressTopics+'</div><div class="stat-label">'+t('in.progress')+'</div></div>';
-    h+='<div class="stat-card"><div class="stat-num pct-low">'+notStarted+'</div><div class="stat-label">Offen</div></div>';
-    h+='<div class="stat-card"><div class="stat-num">'+totalTopics+'</div><div class="stat-label">Themen</div></div>';
-    h+='<div class="stat-card stat-card--main"><div class="stat-num '+pctCls(overallPct/100)+'">'+overallPct+'%</div><div class="stat-label">Gesamt</div></div>';
+    h+='<div class="stat-card"><div class="stat-num pct-low">'+notStarted+'</div><div class="stat-label">'+t('open')+'</div></div>';
+    h+='<div class="stat-card"><div class="stat-num">'+totalTopics+'</div><div class="stat-label">'+t('topics')+'</div></div>';
+    h+='<div class="stat-card stat-card--main"><div class="stat-num '+pctCls(overallPct/100)+'">'+overallPct+'%</div><div class="stat-label">'+t('total')+'</div></div>';
     h+='</div>';
 
     h+='<table><thead><tr><th class="th-drag"></th><th></th><th>'+t('subject')+'</th><th>'+t('exam')+'</th>';
@@ -788,8 +818,8 @@ function renderDopamineCard(subjects) {
     var r=34, cx=40, circ=2*Math.PI*r;
     var offset=circ-(pct*circ);
 
-    var dayNames=["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"];
-    var monthNames=["Januar","Februar","M\u00e4rz","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+    var dayNames=[t('day.sun'),t('day.mon'),t('day.tue'),t('day.wed'),t('day.thu'),t('day.fri'),t('day.sat')];
+    var monthNames=[t('mon.jan'),t('mon.feb'),t('mon.mar'),t('mon.apr'),t('mon.may'),t('mon.jun'),t('mon.jul'),t('mon.aug'),t('mon.sep'),t('mon.oct'),t('mon.nov'),t('mon.dec')];
     var d=new Date();
     var dateStr=dayNames[d.getDay()]+", "+d.getDate()+". "+monthNames[d.getMonth()];
 
@@ -872,11 +902,11 @@ function renderTodoOverview() {
     h+='<h2>To-Do <span class="dopamine-badge" style="background:var(--hsg-text-secondary)">'+open.length+' offen</span></h2>';
     h+='<div class="todo-ov-actions">';
     h+='<div class="todo-ov-sort">';
-    h+='<span class="todo-ov-sort-label">Sortieren nach:</span>';
-    h+='<button class="todo-ov-sort-btn'+(todoOvSort==='priority'?' active':'')+'" data-ovsort="priority">Priorit\u00e4t</button>';
-    h+='<button class="todo-ov-sort-btn'+(todoOvSort==='date'?' active':'')+'" data-ovsort="date">Datum</button>';
+    h+='<span class="todo-ov-sort-label">'+t('sort.by')+'</span>';
+    h+='<button class="todo-ov-sort-btn'+(todoOvSort==='priority'?' active':'')+'" data-ovsort="priority">'+t('priority')+'</button>';
+    h+='<button class="todo-ov-sort-btn'+(todoOvSort==='date'?' active':'')+'" data-ovsort="date">'+t('due')+'</button>';
     h+='</div>';
-    h+='<button class="btn btn-add btn-small" id="todo-ov-add">+ Aufgabe</button>';
+    h+='<button class="btn btn-add btn-small" id="todo-ov-add">'+t('add.task')+'</button>';
     h+='</div></div>';
 
     if(!open.length && !todoOvShowDone){
@@ -1747,7 +1777,6 @@ function bulkSetTopic(sid,ti,status) {
 
 // ---- Status dropdown ----
 function DLABELS_get(s){return{none:t('not.started'),progress:t('in.progress'),review:t('review'),done:t('done')}[s]||s;}
-var DLABELS={none:"Noch nicht begonnen",progress:"In Arbeit",review:"Wiederholen",done:"Fertig"};
 var DICONS={none:"\u2014",progress:"\u270F",review:"\u21BA",done:"\u2713"};
 function closeDropdown(){var e=document.querySelector(".status-dropdown");if(e)e.remove();var b=document.querySelector(".dropdown-backdrop");if(b)b.remove();}
 
@@ -1944,7 +1973,7 @@ function openTodoModal(existing) {
     h += '<input type="text" id="tm-title" placeholder="Titel*" style="'+iStyle+'" value="'+esc(existing?existing.title:'')+'">';
     h += '<select id="tm-prio" style="'+iStyle+'">';
     ['','hoch','mittel','niedrig'].forEach(function(p){
-        var label = p===''?'Priorität wählen…':{hoch:'🔴 Hoch',mittel:'🟡 Mittel',niedrig:'🟢 Niedrig'}[p];
+        var label = p===''?t('prio.select'):{hoch:t('prio.high'),mittel:t('prio.medium'),niedrig:t('prio.low')}[p];
         h += '<option value="'+p+'"'+(existing&&existing.priority===p?' selected':'')+'>'+label+'</option>';
     });
     h += '</select>';

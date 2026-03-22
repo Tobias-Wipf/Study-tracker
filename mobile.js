@@ -96,8 +96,8 @@ function renderMobileTabBar() {
     var tabs = [
         { id: "home", icon: M_ICONS.home, label: t("overview") },
         { id: "subjects", icon: M_ICONS.subjects, label: t("subjects") },
-        { id: "todo", icon: M_ICONS.todo, label: "To-Do" },
-        { id: "settings", icon: M_ICONS.settings, label: "Settings" }
+        { id: "todo", icon: M_ICONS.todo, label: t("todo") },
+        { id: "settings", icon: M_ICONS.settings, label: t("settings") }
     ];
     var h = "";
     tabs.forEach(function(tab) {
@@ -422,13 +422,13 @@ function renderMobileTodo(view) {
     var subjects = loadSubjects();
 
     var h = '<div class="m-header">';
-    h += '<div class="m-header-title">To-Do</div>';
+    h += '<div class="m-header-title">' + t("todo") + '</div>';
     h += '</div>';
 
     // Filters
     h += '<div class="m-todo-filters">';
     ["open", "done", "all"].forEach(function(f) {
-        var label = f === "open" ? t("open.tasks") : f === "done" ? t("done") : "All";
+        var label = f === "open" ? t("open.tasks") : f === "done" ? t("done") : t("all");
         var count = f === "open" ? todos.filter(function(t2) { return !t2.done; }).length :
                     f === "done" ? todos.filter(function(t2) { return t2.done; }).length : todos.length;
         h += '<button class="m-todo-filter' + (mTodoFilter === f ? ' active' : '') + '" data-filter="' + f + '">' + label + ' (' + count + ')</button>';
@@ -513,12 +513,12 @@ function renderMobileSettings(view) {
     var lang = APP_LANG;
 
     var h = '<div class="m-header">';
-    h += '<div class="m-header-title">Settings</div>';
+    h += '<div class="m-header-title">' + t("settings") + '</div>';
     h += '</div>';
 
     // Account
     if (user) {
-        h += '<div class="m-card-title">Account</div>';
+        h += '<div class="m-card-title">' + t("account") + '</div>';
         h += '<div class="m-settings-group">';
         h += '<div class="m-settings-row"><span class="m-settings-label">' + esc(user.displayName || "User") + '</span><span class="m-settings-value">' + esc(user.email) + '</span></div>';
         h += '<div class="m-settings-row danger" id="m-logout"><span class="m-settings-label">' + t("logout") + '</span></div>';
@@ -526,14 +526,14 @@ function renderMobileSettings(view) {
     }
 
     // Appearance
-    h += '<div class="m-card-title">Appearance</div>';
+    h += '<div class="m-card-title">' + t("appearance") + '</div>';
     h += '<div class="m-settings-group">';
     h += '<div class="m-settings-row" id="m-dark-toggle"><span class="m-settings-label">' + t("dark.mode") + '</span><button class="m-toggle' + (isDark ? ' on' : '') + '"></button></div>';
     h += '<div class="m-settings-row" id="m-lang-toggle"><span class="m-settings-label">Language</span><span class="m-settings-value">' + (lang === "de" ? "Deutsch" : "English") + '</span></div>';
     h += '</div>';
 
     // Data
-    h += '<div class="m-card-title">Data</div>';
+    h += '<div class="m-card-title">' + t("data") + '</div>';
     h += '<div class="m-settings-group">';
     h += '<div class="m-settings-row" id="m-presets"><span class="m-settings-label">\ud83d\udcda ' + t("presets") + '</span></div>';
     h += '<div class="m-settings-row danger" id="m-reset"><span class="m-settings-label">' + t("reset.semester") + '</span></div>';
@@ -605,7 +605,7 @@ function showMobileStatusDropdown(chip, subjectId, view) {
     dd.className = "m-dropdown-sheet";
     var title = document.createElement("div");
     title.className = "m-dropdown-title";
-    title.textContent = esc(cat);
+    title.textContent = cat;
     dd.appendChild(title);
 
     options.forEach(function(o) {

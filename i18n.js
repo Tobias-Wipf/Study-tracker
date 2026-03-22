@@ -56,7 +56,7 @@
       'i.faq.a8': 'Öffne study-tracker.org in Safari, tippe auf das Teilen-Symbol (Quadrat mit Pfeil nach oben), scrolle nach unten und wähle \u201eZum Home-Bildschirm\u201c. Tippe auf \u201eHinzufügen\u201c — fertig! Die App erscheint als Icon auf deinem Home-Bildschirm und läuft im Vollbild wie eine native App.',
       // INDEX – CTA & footer
       'i.cta.title': 'Bereit anzufangen?',
-      'i.cta.desc': 'Kostenlos. Einfach anmelden und loslegen.',
+      'i.cta.desc': 'Kostenlos. Open Source. Einfach anmelden und loslegen.',
       'i.cta.btn': 'Mit Google anmelden',
       'i.footer': '© 2026 Studytracker',
 
@@ -170,7 +170,7 @@
       'i.faq.q7': 'What are templates and how do they work?', 'i.faq.a7': 'Templates are ready-made subject structures with topics, categories and exam dates that you can import from other students. You can also share your own templates so your classmates don\'t have to set everything up again. You can even import templates from Excel files or images (via OCR).',
       'i.faq.q8': 'How do I install Studytracker on iPhone?', 'i.faq.a8': 'Open study-tracker.org in Safari, tap the Share icon (square with upward arrow), scroll down and choose "Add to Home Screen". Tap "Add" — done! The app appears as an icon on your home screen and runs in full-screen like a native app.',
       // INDEX – CTA & footer
-      'i.cta.title': 'Ready to get started?', 'i.cta.desc': 'Free. Just sign in and go.',
+      'i.cta.title': 'Ready to get started?', 'i.cta.desc': 'Free. Open source. Just sign in and go.',
       'i.cta.btn': 'Sign in with Google', 'i.footer': '© 2026 Studytracker',
 
       // FEATURES PAGE – Hero

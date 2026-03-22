@@ -132,6 +132,7 @@
             <button class="lp-lang-toggle" id="lang-toggle">EN</button>
             <button class="lp-nav-btn" onclick="window.location.href='index.html?action=signin'" data-i18n="nav.signin">Anmelden</button>
         </div>
+        <button class="lp-hamburger" id="lp-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
 </nav>
 
@@ -448,11 +449,20 @@
         document.querySelector('.lp-nav').classList.toggle('lp-nav--scrolled', window.scrollY > 10);
     });
 
-    // Wire up sign-in buttons to redirect to index.html (which handles auth)
-    document.getElementById('features-signin').addEventListener('click', function(e) {
-        e.preventDefault();
-        window.location.href = 'index.html?action=signin';
-    });
+    var hamburger = document.getElementById('lp-hamburger');
+    if (hamburger) {
+        hamburger.onclick = function() {
+            hamburger.classList.toggle('open');
+            document.getElementById('lp-nav').classList.toggle('nav-open');
+        };
+        document.querySelectorAll('.lp-nav-link, .lp-nav-btn').forEach(function(el) {
+            el.addEventListener('click', function() {
+                hamburger.classList.remove('open');
+                document.getElementById('lp-nav').classList.remove('nav-open');
+            });
+        });
+    }
+
 </script>
 </body>
 </html>
