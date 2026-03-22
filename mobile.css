@@ -276,7 +276,7 @@ body.dark .m-detail-header {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     padding: 12px 16px;
-    padding-bottom: calc(20px + env(safe-area-inset-bottom));
+    padding-bottom: calc(100px + env(safe-area-inset-bottom));
 }
 .m-detail-progress {
     width: 100%;
