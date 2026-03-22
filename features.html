@@ -114,6 +114,9 @@
             .feature-block { grid-template-columns: 1fr; gap: 32px; }
             .feature-block.reverse .feature-visual { order: 0; }
             .setup-steps { grid-template-columns: 1fr; }
+            .feature-visual { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .mini-table { font-size: .75rem; }
+            .mini-table th, .mini-table td { padding: 8px 6px; }
         }
     </style>
 </head>
@@ -231,9 +234,9 @@
                     <thead>
                         <tr>
                             <th>Thema</th>
-                            <th>Vorlesung</th>
+                            <th>VL</th>
                             <th>&Uuml;bung</th>
-                            <th>Zusammenfassung</th>
+                            <th>ZF</th>
                         </tr>
                     </thead>
                     <tbody>
