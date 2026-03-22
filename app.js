@@ -409,6 +409,21 @@ function startDemoMode() {
         {id:"demo5", title:"VWL Vorlesung Woche 2 nacharbeiten", priority:"mittel", due:new Date(now.getTime()-1*86400000).toISOString().slice(0,10), time:"", note:"", subjectId:"vwl", done:true, createdAt:now.toISOString(), completedAt:new Date(now.getTime()-1*86400000).toISOString()}
     ];
     localStorage.setItem("lf_todos", JSON.stringify(todos));
+    // Sample study log (past 14 days of activity for charts)
+    var log = [];
+    var DAY = 86400000;
+    for (var d = 13; d >= 0; d--) {
+        var dayTs = now.getTime() - d * DAY + 36000000; // 10am each day
+        // Vary activity per day (more on weekdays, less on weekends)
+        var dayOfWeek = new Date(dayTs).getDay();
+        var count = (dayOfWeek === 0 || dayOfWeek === 6) ? 1 : 2 + (d % 3);
+        for (var c = 0; c < count; c++) {
+            var si = (d + c) % DEFAULT_SUBJECTS.length;
+            var subj = DEFAULT_SUBJECTS[si];
+            log.push({subject: subj.id, topic: (d + c) % subj.topics.length, cat: subj.categories[c % subj.categories.length], ts: dayTs + c * 3600000});
+        }
+    }
+    localStorage.setItem("lf_studylog", JSON.stringify(log));
     // Sample goals
     localStorage.setItem("lf_dailygoal", JSON.stringify({target:5}));
     localStorage.setItem("lf_weeklygoal", JSON.stringify({target:10}));
