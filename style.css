@@ -36,6 +36,8 @@
 .lp-cta-btn { display:inline-flex; align-items:center; gap:12px; background:#fff; color:#111; border:none; border-radius:980px; padding:20px 44px; font-size:1.15rem; font-weight:600; cursor:pointer; font-family:inherit; transition:transform .2s, box-shadow .2s, background .15s; box-shadow:0 4px 24px rgba(0,0,0,.35); }
 .lp-cta-btn:hover { transform:scale(1.03); box-shadow:0 8px 36px rgba(0,0,0,.45); background:#e8e8e8; }
 .lp-cta-btn--large { padding:22px 52px; font-size:1.2rem; }
+.lp-demo-btn { display:inline-flex; align-items:center; gap:8px; margin-top:12px; padding:10px 24px; background:transparent; border:1px solid rgba(255,255,255,.3); border-radius:20px; color:rgba(255,255,255,.8); font-size:.95rem; font-weight:500; cursor:pointer; transition:all .2s; font-family:inherit; }
+.lp-demo-btn:hover { background:rgba(255,255,255,.1); border-color:rgba(255,255,255,.5); color:#fff; }
 
 /* App mockup */
 .lp-hero-visual { flex:1; max-width:600px; }

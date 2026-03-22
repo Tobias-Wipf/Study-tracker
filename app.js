@@ -38,6 +38,7 @@ var auth = firebase.auth();
 var db = firebase.firestore();
 var currentUser = null;
 var studyNextDismissed = false;
+var isDemoMode = false;
 
 // ---- Mobile Detection ----
 var _isMobile = null;
@@ -341,6 +342,17 @@ function pullFromCloud(callback) {
 // ---- Auth UI ----
 function updateAuthUI() {
     var area = document.getElementById("auth-area");
+    if (isDemoMode && !currentUser) {
+        area.innerHTML = '<span class="auth-name">Demo-Modus</span>' +
+            '<button class="header-btn auth-login-btn" id="demo-signin-btn" title="Anmelden">Anmelden</button>';
+        document.getElementById("demo-signin-btn").onclick = function() {
+            var provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider).catch(function(err) {
+                if (err.code !== "auth/popup-closed-by-user") showToast("Anmeldung fehlgeschlagen: " + err.message);
+            });
+        };
+        return;
+    }
     if (currentUser) {
         var photo = currentUser.photoURL ? '<img class="auth-avatar" src="'+esc(currentUser.photoURL)+'" referrerpolicy="no-referrer">' : '';
         area.innerHTML = photo +
@@ -363,6 +375,50 @@ function updateAuthUI() {
             }
         };
     }
+}
+
+// ---- Demo Mode ----
+function startDemoMode() {
+    isDemoMode = true;
+    // Save default subjects
+    localStorage.setItem("lf_subjects", JSON.stringify(DEFAULT_SUBJECTS));
+    // Generate realistic statuses (~40% done, 20% progress, 10% review, 30% none)
+    var statuses = {};
+    var rng = 1;
+    DEFAULT_SUBJECTS.forEach(function(subj) {
+        subj.topics.forEach(function(topic, ti) {
+            subj.categories.forEach(function(cat, ci) {
+                rng = (rng * 16807 + ti * 13 + ci * 7) % 2147483647;
+                var r = (rng & 0xffff) / 0x10000;
+                var st = "none";
+                if (r < 0.40) st = "done";
+                else if (r < 0.60) st = "progress";
+                else if (r < 0.70) st = "review";
+                statuses[subj.id + "." + ti + "." + cat] = st;
+            });
+        });
+    });
+    localStorage.setItem("lf_statuses", JSON.stringify(statuses));
+    // Sample todos
+    var now = new Date();
+    var todos = [
+        {id:"demo1", title:"Altklausur VWL durcharbeiten", priority:"hoch", due:new Date(now.getTime()+2*86400000).toISOString().slice(0,10), time:"", note:"", subjectId:"vwl", done:false, createdAt:now.toISOString(), completedAt:null},
+        {id:"demo2", title:"Mathe \u00dcbungsserie 5 abgeben", priority:"hoch", due:new Date(now.getTime()+1*86400000).toISOString().slice(0,10), time:"14:00", note:"Abgabe per Studynet", subjectId:"mathe", done:false, createdAt:now.toISOString(), completedAt:null},
+        {id:"demo3", title:"BWL Zusammenfassung Kapitel 3", priority:"mittel", due:new Date(now.getTime()+5*86400000).toISOString().slice(0,10), time:"", note:"", subjectId:"bwl", done:false, createdAt:now.toISOString(), completedAt:null},
+        {id:"demo4", title:"Recht Vorlesung nachholen", priority:"niedrig", due:"", time:"", note:"", subjectId:"recht", done:false, createdAt:now.toISOString(), completedAt:null},
+        {id:"demo5", title:"VWL Vorlesung Woche 2 nacharbeiten", priority:"mittel", due:new Date(now.getTime()-1*86400000).toISOString().slice(0,10), time:"", note:"", subjectId:"vwl", done:true, createdAt:now.toISOString(), completedAt:new Date(now.getTime()-1*86400000).toISOString()}
+    ];
+    localStorage.setItem("lf_todos", JSON.stringify(todos));
+    // Sample goals
+    localStorage.setItem("lf_dailygoal", JSON.stringify({target:5}));
+    localStorage.setItem("lf_weeklygoal", JSON.stringify({target:10}));
+    // Show app
+    var landing = document.getElementById("landing");
+    var appWrapper = document.getElementById("app-wrapper");
+    if (landing) landing.style.display = "none";
+    if (appWrapper) appWrapper.style.display = "block";
+    updateAuthUI();
+    renderAll();
 }
 
 // Auth state listener
@@ -394,6 +450,11 @@ auth.onAuthStateChanged(function(user) {
                     if (err.code !== "auth/popup-closed-by-user") showToast("Anmeldung fehlgeschlagen: " + err.message);
                 });
             };
+        });
+        // Wire up demo buttons
+        ["lp-hero-demo","lp-bottom-demo"].forEach(function(id) {
+            var btn = document.getElementById(id);
+            if (btn) btn.onclick = startDemoMode;
         });
         // Show sign-in modal if redirected from features/about page
         if (wantsSignin) {

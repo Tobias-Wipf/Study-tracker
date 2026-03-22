@@ -10,6 +10,7 @@
       'i.hero.headline': 'Progress, Simplified.',
       'i.hero.subhead': 'Verfolge deinen Lernfortschritt, verwalte deine Aufgaben und behalte alle Prüfungstermine im Blick — auf all deinen Geräten.',
       'i.hero.cta': 'Mit Google anmelden',
+      'i.hero.demo': 'Demo ausprobieren',
       // INDEX – Mockup
       'i.mock.done': 'Fertig', 'i.mock.prog': 'In Arbeit', 'i.mock.open': 'Offen',
       // INDEX – Features grid
@@ -58,6 +59,7 @@
       'i.cta.title': 'Bereit anzufangen?',
       'i.cta.desc': 'Kostenlos. Open Source. Einfach anmelden und loslegen.',
       'i.cta.btn': 'Mit Google anmelden',
+      'i.cta.demo': 'Oder erst ausprobieren',
       'i.footer': '© 2026 Studytracker',
 
       // FEATURES PAGE – Hero
@@ -143,6 +145,7 @@
       'i.hero.headline': 'Progress, Simplified.',
       'i.hero.subhead': 'Track your study progress, manage your tasks and keep all exam dates in view — on all your devices.',
       'i.hero.cta': 'Sign in with Google',
+      'i.hero.demo': 'Try demo',
       // INDEX – Mockup
       'i.mock.done': 'Done', 'i.mock.prog': 'In progress', 'i.mock.open': 'Open',
       // INDEX – Features grid
@@ -171,7 +174,8 @@
       'i.faq.q8': 'How do I install Studytracker on iPhone?', 'i.faq.a8': 'Open study-tracker.org in Safari, tap the Share icon (square with upward arrow), scroll down and choose "Add to Home Screen". Tap "Add" — done! The app appears as an icon on your home screen and runs in full-screen like a native app.',
       // INDEX – CTA & footer
       'i.cta.title': 'Ready to get started?', 'i.cta.desc': 'Free. Open source. Just sign in and go.',
-      'i.cta.btn': 'Sign in with Google', 'i.footer': '© 2026 Studytracker',
+      'i.cta.btn': 'Sign in with Google', 'i.cta.demo': 'Or try it first',
+      'i.footer': '© 2026 Studytracker',
 
       // FEATURES PAGE – Hero
       'f.hero.eyebrow': 'Feature overview',
