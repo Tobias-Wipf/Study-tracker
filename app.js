@@ -84,18 +84,24 @@ var APP_T = {
         'not.started': 'Noch nicht begonnen',
         'rep1': '1. Repetition',
         'rep2': '2. Repetition',
+        'rep3': '3. Repetition',
+        'repetitions': 'Repetitionen',
+        'repetitions.off': 'Aus',
         'all.done': 'Alle: Fertig',
         'all.progress': 'Alle: In Arbeit',
         'all.review': 'Alles: Wiederholen',
         'all.rep1': 'Alle: 1. Repetition',
         'all.rep2': 'Alle: 2. Repetition',
+        'all.rep3': 'Alle: 3. Repetition',
         'all.reset': 'Alle zur\u00fccksetzen',
         'topic.all.done': 'Alles: Fertig',
         'topic.all.progress': 'Alles: In Arbeit',
         'topic.all.review': 'Alles: Wiederholen',
         'topic.all.rep1': 'Alles: 1. Repetition',
         'topic.all.rep2': 'Alles: 2. Repetition',
+        'topic.all.rep3': 'Alles: 3. Repetition',
         'topic.reset': 'Zur\u00fccksetzen',
+        'close': 'Schliessen',
         'edit': 'Bearbeiten',
         'drag.hint': 'Ziehen zum Verschieben',
         'bulk.hint': 'Klicken: alle setzen',
@@ -192,18 +198,24 @@ var APP_T = {
         'not.started': 'Not started',
         'rep1': '1st Repetition',
         'rep2': '2nd Repetition',
+        'rep3': '3rd Repetition',
+        'repetitions': 'Repetitions',
+        'repetitions.off': 'Off',
         'all.done': 'All: Done',
         'all.progress': 'All: In progress',
         'all.review': 'All: Review',
         'all.rep1': 'All: 1st Repetition',
         'all.rep2': 'All: 2nd Repetition',
+        'all.rep3': 'All: 3rd Repetition',
         'all.reset': 'Reset all',
         'topic.all.done': 'All: Done',
         'topic.all.progress': 'All: In progress',
         'topic.all.review': 'All: Review',
         'topic.all.rep1': 'All: 1st Repetition',
         'topic.all.rep2': 'All: 2nd Repetition',
+        'topic.all.rep3': 'All: 3rd Repetition',
         'topic.reset': 'Reset',
+        'close': 'Close',
         'edit': 'Edit',
         'drag.hint': 'Drag to reorder',
         'bulk.hint': 'Click: set all',
@@ -314,6 +326,7 @@ function pushToCloud() {
         todos: loadTodos(),
         log: loadStudyLog(),
         dailyGoal: loadDailyGoal(),
+        repetitions: loadRepCount(),
         updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     };
     db.collection("users").doc(currentUser.uid).set(data, {merge:true})
@@ -342,6 +355,7 @@ function pullFromCloud(callback) {
             if (d.todos) localStorage.setItem("lf_todos", JSON.stringify(d.todos));
             if (d.log) localStorage.setItem("lf_studylog", JSON.stringify(d.log));
             if (d.dailyGoal) localStorage.setItem("lf_dailygoal", JSON.stringify(d.dailyGoal));
+            if (d.repetitions !== undefined) localStorage.setItem("lf_repetitions", String(d.repetitions));
         } else {
             isFirstLogin = true;
             // Clear default subjects for fresh start
@@ -557,9 +571,32 @@ function savePlanner(l) { localStorage.setItem("lf_planner", JSON.stringify(l));
 function loadTodos() { var r = localStorage.getItem("lf_todos"); return r ? JSON.parse(r) : []; }
 function saveTodos(l) { localStorage.setItem("lf_todos", JSON.stringify(l)); scheduleSync(); }
 
+// ---- Repetition setting ----
+function loadRepCount() { var v = localStorage.getItem("lf_repetitions"); return v !== null ? Number(v) : 0; }
+function saveRepCount(n) { localStorage.setItem("lf_repetitions", String(n)); scheduleSync(); }
+
 // ---- Helpers ----
-var STATUS_CYCLE = ["none","progress","review","done","rep1","rep2"];
-var STATUS_VALUE = {none:0, progress:0.25, review:0.5, done:0.75, rep1:0.9, rep2:1};
+var BASE_CYCLE = ["none","progress","review","done"];
+var REP_KEYS = ["rep1","rep2","rep3"];
+
+function getStatusCycle() {
+    var n = loadRepCount();
+    return n > 0 ? BASE_CYCLE.concat(REP_KEYS.slice(0, n)) : BASE_CYCLE;
+}
+function getStatusValue() {
+    var n = loadRepCount(), map;
+    if (n === 0) map = {none:0, progress:0.33, review:0.67, done:1};
+    else if (n === 1) map = {none:0, progress:0.25, review:0.5, done:0.75, rep1:1};
+    else if (n === 2) map = {none:0, progress:0.2, review:0.4, done:0.6, rep1:0.8, rep2:1};
+    else map = {none:0, progress:0.17, review:0.33, done:0.5, rep1:0.67, rep2:0.83, rep3:1};
+    return map;
+}
+// Clamp any status that exceeds current rep count back to the highest allowed
+function clampStatus(st) {
+    var cycle = getStatusCycle();
+    if (cycle.indexOf(st) === -1 && REP_KEYS.indexOf(st) !== -1) return cycle[cycle.length - 1];
+    return st;
+}
 
 function genId() { return "s"+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
 function esc(s) { var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
@@ -577,12 +614,12 @@ function getCompletionsThisWeek() {
 // ---- Progress calc ----
 function calcTopicPct(d,sid,ti,cats) {
     if(!cats.length) return 0;
-    var s=0; cats.forEach(function(c){ s+=STATUS_VALUE[getStatus(d,sid,ti,c)]; });
+    var s=0; cats.forEach(function(c){ s+=getStatusValue()[getStatus(d,sid,ti,c)]; });
     return s/cats.length;
 }
 function calcCatPct(d,sid,cat,n) {
     if(!n) return 0; var s=0;
-    for(var i=0;i<n;i++) s+=STATUS_VALUE[getStatus(d,sid,i,cat)];
+    for(var i=0;i<n;i++) s+=getStatusValue()[getStatus(d,sid,i,cat)];
     return s/n;
 }
 function calcSubjPct(d,subj) {
@@ -708,6 +745,33 @@ function initDarkMode() {
             renderAll();
         });
     }
+    // Settings button
+    var settingsBtn = document.getElementById("header-settings-btn");
+    if (settingsBtn) settingsBtn.addEventListener("click", showSettingsModal);
+}
+
+// ---- Settings modal ----
+function showSettingsModal() {
+    var rc = loadRepCount();
+    var iStyle = "width:100%;font-family:inherit;font-size:.95rem;padding:10px 12px;border:1px solid var(--hsg-border);border-radius:var(--hsg-radius);background:var(--hsg-white);color:var(--hsg-text);box-sizing:border-box;cursor:pointer;";
+    var h = '<h3 class="modal-title">' + t('settings') + '</h3>';
+    h += '<div style="margin-bottom:16px;">';
+    h += '<label style="display:block;font-weight:600;margin-bottom:8px;font-size:.9rem;">' + t('repetitions') + '</label>';
+    h += '<select id="rep-count-select" style="' + iStyle + '">';
+    h += '<option value="0"' + (rc === 0 ? ' selected' : '') + '>' + t('repetitions.off') + '</option>';
+    h += '<option value="1"' + (rc === 1 ? ' selected' : '') + '>1 Repetition</option>';
+    h += '<option value="2"' + (rc === 2 ? ' selected' : '') + '>2 Repetitions</option>';
+    h += '<option value="3"' + (rc === 3 ? ' selected' : '') + '>3 Repetitions</option>';
+    h += '</select>';
+    h += '</div>';
+    h += '<div class="modal-actions"><button class="btn btn-small modal-cancel">' + t('close') + '</button></div>';
+    showModal(h, function(md) {
+        md.querySelector("#rep-count-select").onchange = function() {
+            saveRepCount(Number(this.value));
+            renderAll();
+        };
+        md.querySelector(".modal-cancel").onclick = closeModal;
+    });
 }
 
 // ---- Tab state ----
@@ -769,7 +833,7 @@ function renderStudyNext() {
         for(var i=0;i<subj.topics.length;i++){
             var tp=calcTopicPct(data,subj.id,i,subj.categories);
             if(tp<1){
-                var cat=null; subj.categories.forEach(function(c){var st=getStatus(data,subj.id,i,c);if(!cat&&st!=="done"&&st!=="rep1"&&st!=="rep2") cat=c;});
+                var cat=null; subj.categories.forEach(function(c){var st=getStatus(data,subj.id,i,c);if(!cat&&st!=="done"&&st!=="rep1"&&st!=="rep2"&&st!=="rep3") cat=c;});
                 var score=urg*10+tp*100;
                 if(score<bestScore){ bestScore=score; best={sid:subj.id,sname:subj.name,ti:i,tname:subj.topics[i],cat:cat,tp:tp,exam:subj.examDate}; }
                 break;
@@ -1181,7 +1245,7 @@ function renderProgressChart() {
     subjects.forEach(function(s){
         var subjDone=0;
         s.categories.forEach(function(cat){
-            for(var ti=0;ti<s.topics.length;ti++) subjDone+=STATUS_VALUE[getStatus(statuses,s.id,ti,cat)];
+            for(var ti=0;ti<s.topics.length;ti++) subjDone+=getStatusValue()[getStatus(statuses,s.id,ti,cat)];
         });
         var cells=subjCells[s.id]||1;
         todaySubjVals[s.id]=Math.min((subjDone/cells)*100,100);
@@ -1359,7 +1423,7 @@ function renderSubjectChart(subj) {
     subj.categories.forEach(function(cat){
         var catDone=0;
         for(var ti=0;ti<subj.topics.length;ti++){
-            catDone+=STATUS_VALUE[getStatus(statuses,subj.id,ti,cat)];
+            catDone+=getStatusValue()[getStatus(statuses,subj.id,ti,cat)];
         }
         todayVals[cat]=(catDone/subj.topics.length)*100;
         todayTotal+=catDone;
@@ -1800,7 +1864,7 @@ function markAllSubject(sid) {
     for(var i=0;i<subj.topics.length;i++) subj.categories.forEach(function(cat){
         var prev=getStatus(data,subj.id,i,cat);
         setStatus(data,subj.id,i,cat,target);
-        if((target==="done"||target==="rep1"||target==="rep2")&&prev!==target) logCompletion(subj.id,i,cat);
+        if((target==="done"||target==="rep1"||target==="rep2"||target==="rep3")&&prev!==target) logCompletion(subj.id,i,cat);
     });
     saveStatuses(data); renderAll();
 }
@@ -1810,7 +1874,10 @@ function showBulkDropdown(anchor,sid,cat) {
     closeDropdown();
     var bd=document.createElement("div");bd.className="dropdown-backdrop";bd.onclick=closeDropdown;document.body.appendChild(bd);
     var dd=document.createElement("div");dd.className="status-dropdown";
-    [{l:t('all.done'),s:"done",ic:"\u2713",c:"i-done"},{l:t('all.progress'),s:"progress",ic:"\u270F",c:"i-progress"},{l:t('all.rep1'),s:"rep1",ic:"\u2781",c:"i-rep1"},{l:t('all.rep2'),s:"rep2",ic:"\u2782",c:"i-rep2"},{l:t('all.reset'),s:"none",ic:"\u2014",c:"i-none"}].forEach(function(o){
+    var bulkOpts=[{l:t('all.done'),s:"done",ic:"\u2713",c:"i-done"},{l:t('all.progress'),s:"progress",ic:"\u270F",c:"i-progress"}];
+    var rn=loadRepCount();if(rn>=1)bulkOpts.push({l:t('all.rep1'),s:"rep1",ic:"\u2781",c:"i-rep1"});if(rn>=2)bulkOpts.push({l:t('all.rep2'),s:"rep2",ic:"\u2782",c:"i-rep2"});if(rn>=3)bulkOpts.push({l:t('all.rep3'),s:"rep3",ic:"\u2783",c:"i-rep3"});
+    bulkOpts.push({l:t('all.reset'),s:"none",ic:"\u2014",c:"i-none"});
+    bulkOpts.forEach(function(o){
         var opt=document.createElement("div");opt.className="dropdown-option";
         opt.innerHTML='<span class="option-icon '+o.c+'">'+o.ic+'</span><span>'+o.l+'</span>';
         opt.onclick=function(e){e.stopPropagation();bulkSetCat(sid,cat,o.s);closeDropdown();};
@@ -1829,7 +1896,7 @@ function bulkSetCat(sid,cat,status) {
     for(var i=0;i<subj.topics.length;i++){
         var prev=getStatus(d,subj.id,i,cat);
         setStatus(d,subj.id,i,cat,status);
-        if((status==="done"||status==="rep1"||status==="rep2")&&prev!==status) logCompletion(subj.id,i,cat);
+        if((status==="done"||status==="rep1"||status==="rep2"||status==="rep3")&&prev!==status) logCompletion(subj.id,i,cat);
     }
     saveStatuses(d); renderSubjectAndOverview(sid);
 }
@@ -1839,7 +1906,10 @@ function showTopicBulkDropdown(anchor,sid,ti) {
     closeDropdown();
     var bd=document.createElement("div");bd.className="dropdown-backdrop";bd.onclick=closeDropdown;document.body.appendChild(bd);
     var dd=document.createElement("div");dd.className="status-dropdown";
-    [{l:t('topic.all.done'),s:"done",ic:"\u2713",c:"i-done"},{l:t('topic.all.progress'),s:"progress",ic:"\u270F",c:"i-progress"},{l:t('topic.all.review'),s:"review",ic:"\u21BA",c:"i-review"},{l:t('topic.all.rep1'),s:"rep1",ic:"\u2781",c:"i-rep1"},{l:t('topic.all.rep2'),s:"rep2",ic:"\u2782",c:"i-rep2"},{l:t('topic.reset'),s:"none",ic:"\u2014",c:"i-none"}].forEach(function(o){
+    var tOpts=[{l:t('topic.all.done'),s:"done",ic:"\u2713",c:"i-done"},{l:t('topic.all.progress'),s:"progress",ic:"\u270F",c:"i-progress"},{l:t('topic.all.review'),s:"review",ic:"\u21BA",c:"i-review"}];
+    var rn2=loadRepCount();if(rn2>=1)tOpts.push({l:t('topic.all.rep1'),s:"rep1",ic:"\u2781",c:"i-rep1"});if(rn2>=2)tOpts.push({l:t('topic.all.rep2'),s:"rep2",ic:"\u2782",c:"i-rep2"});if(rn2>=3)tOpts.push({l:t('topic.all.rep3'),s:"rep3",ic:"\u2783",c:"i-rep3"});
+    tOpts.push({l:t('topic.reset'),s:"none",ic:"\u2014",c:"i-none"});
+    tOpts.forEach(function(o){
         var opt=document.createElement("div");opt.className="dropdown-option";
         opt.innerHTML='<span class="option-icon '+o.c+'">'+o.ic+'</span><span>'+o.l+'</span>';
         opt.onclick=function(e){e.stopPropagation();bulkSetTopic(sid,ti,o.s);closeDropdown();};
@@ -1858,14 +1928,14 @@ function bulkSetTopic(sid,ti,status) {
     subj.categories.forEach(function(cat){
         var prev=getStatus(d,subj.id,ti,cat);
         setStatus(d,subj.id,ti,cat,status);
-        if((status==="done"||status==="rep1"||status==="rep2")&&prev!==status) logCompletion(subj.id,ti,cat);
+        if((status==="done"||status==="rep1"||status==="rep2"||status==="rep3")&&prev!==status) logCompletion(subj.id,ti,cat);
     });
     saveStatuses(d); renderSubjectAndOverview(sid);
 }
 
 // ---- Status dropdown ----
-function DLABELS_get(s){return{none:t('not.started'),progress:t('in.progress'),review:t('review'),done:t('done'),rep1:t('rep1'),rep2:t('rep2')}[s]||s;}
-var DICONS={none:"\u2014",progress:"\u270F",review:"\u21BA",done:"\u2713",rep1:"\u2781",rep2:"\u2782"};
+function DLABELS_get(s){return{none:t('not.started'),progress:t('in.progress'),review:t('review'),done:t('done'),rep1:t('rep1'),rep2:t('rep2'),rep3:t('rep3')}[s]||s;}
+var DICONS={none:"\u2014",progress:"\u270F",review:"\u21BA",done:"\u2713",rep1:"\u2781",rep2:"\u2782",rep3:"\u2783"};
 function closeDropdown(){var e=document.querySelector(".status-dropdown");if(e)e.remove();var b=document.querySelector(".dropdown-backdrop");if(b)b.remove();}
 
 function showStatusDropdown(cell) {
@@ -1874,13 +1944,13 @@ function showStatusDropdown(cell) {
     var d=loadStatuses(),cur=getStatus(d,sk,ti,cat);
     var bd=document.createElement("div");bd.className="dropdown-backdrop";bd.onclick=closeDropdown;document.body.appendChild(bd);
     var dd=document.createElement("div");dd.className="status-dropdown";
-    STATUS_CYCLE.forEach(function(st){
+    getStatusCycle().forEach(function(st){
         var opt=document.createElement("div");opt.className="dropdown-option"+(st===cur?" selected":"");
         opt.innerHTML='<span class="option-icon i-'+st+'">'+DICONS[st]+'</span><span>'+DLABELS_get(st)+'</span>';
         opt.onclick=function(e){e.stopPropagation();
             var d2=loadStatuses(),prev=getStatus(d2,sk,ti,cat);
             setStatus(d2,sk,ti,cat,st); saveStatuses(d2);
-            if((st==="done"||st==="rep1"||st==="rep2")&&prev!==st) logCompletion(sk,ti,cat);
+            if((st==="done"||st==="rep1"||st==="rep2"||st==="rep3")&&prev!==st) logCompletion(sk,ti,cat);
             closeDropdown(); renderSubjectAndOverview(sk);};
         dd.appendChild(opt);
     });

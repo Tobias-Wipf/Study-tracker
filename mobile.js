@@ -530,6 +530,9 @@ function renderMobileSettings(view) {
     h += '<div class="m-settings-group">';
     h += '<div class="m-settings-row" id="m-dark-toggle"><span class="m-settings-label">' + t("dark.mode") + '</span><button class="m-toggle' + (isDark ? ' on' : '') + '"></button></div>';
     h += '<div class="m-settings-row" id="m-lang-toggle"><span class="m-settings-label">Language</span><span class="m-settings-value">' + (lang === "de" ? "Deutsch" : "English") + '</span></div>';
+    var rc = loadRepCount();
+    var repLabel = rc === 0 ? t("repetitions.off") : rc.toString();
+    h += '<div class="m-settings-row" id="m-rep-toggle"><span class="m-settings-label">' + t("repetitions") + '</span><span class="m-settings-value">' + repLabel + '</span></div>';
     h += '</div>';
 
     // Data
@@ -563,6 +566,16 @@ function renderMobileSettings(view) {
         };
     }
 
+    // Repetitions toggle (cycle 0 → 1 → 2 → 3 → 0)
+    var repRow = document.getElementById("m-rep-toggle");
+    if (repRow) {
+        repRow.onclick = function() {
+            var cur = loadRepCount();
+            saveRepCount(cur >= 3 ? 0 : cur + 1);
+            renderMobileSettings(view);
+        };
+    }
+
     // Presets
     var presetsRow = document.getElementById("m-presets");
     if (presetsRow) presetsRow.onclick = function() { showPresetLibrary(); };
@@ -590,11 +603,13 @@ function showMobileStatusDropdown(chip, subjectId, view) {
     var options = [
         { status: "done", label: t("done"), icon: "\u2713", color: "#00b87a" },
         { status: "progress", label: t("in.progress"), icon: "\u270F", color: "#d4a843" },
-        { status: "review", label: t("review"), icon: "\u21BA", color: "#a78bfa" },
-        { status: "rep1", label: t("rep1"), icon: "\u2781", color: "#2563eb" },
-        { status: "rep2", label: t("rep2"), icon: "\u2782", color: "#0ea5e9" },
-        { status: "none", label: t("not.started"), icon: "\u2014", color: "#666" }
+        { status: "review", label: t("review"), icon: "\u21BA", color: "#a78bfa" }
     ];
+    var rn = loadRepCount();
+    if (rn >= 1) options.push({ status: "rep1", label: t("rep1"), icon: "\u2781", color: "#2563eb" });
+    if (rn >= 2) options.push({ status: "rep2", label: t("rep2"), icon: "\u2782", color: "#0ea5e9" });
+    if (rn >= 3) options.push({ status: "rep3", label: t("rep3"), icon: "\u2783", color: "#06b6d4" });
+    options.push({ status: "none", label: t("not.started"), icon: "\u2014", color: "#666" });
 
     // Backdrop
     var backdrop = document.createElement("div");
@@ -621,7 +636,7 @@ function showMobileStatusDropdown(chip, subjectId, view) {
             var prev = getStatus(d2, sid, ti, cat);
             setStatus(d2, sid, ti, cat, o.status);
             saveStatuses(d2);
-            if ((o.status === "done" || o.status === "rep1" || o.status === "rep2") && prev !== o.status) logCompletion(sid, ti, cat);
+            if ((o.status === "done" || o.status === "rep1" || o.status === "rep2" || o.status === "rep3") && prev !== o.status) logCompletion(sid, ti, cat);
             closeMobileDropdown();
             renderMobileSubjectDetail(view, subjectId);
         };
