@@ -70,7 +70,7 @@
       // FEATURES PAGE – blocks
       'f.b1.tag': 'Kern-Feature', 'f.b1.title': 'Fortschritt sehen, nicht sch\u00e4tzen',
       'f.b1.p1': 'F\u00fcr jedes Fach pflegst du eine Liste von Themen. Jedes Thema bekommt pro Lernkategorie (z.B. Vorlesung, \u00dcbung, Zusammenfassung) einen Status. So siehst du genau, was schon sitzt und wo noch L\u00fccken sind.',
-      'f.b1.p2': 'Vier Status-Stufen: <strong style="color:#555">Nicht begonnen</strong> \u2192 <strong style="color:#d4a843">In Arbeit</strong> \u2192 <strong style="color:#a78bfa">Wiederholen</strong> \u2192 <strong style="color:#00b87a">Fertig</strong>. Per Klick wechseln, kein Aufwand.',
+      'f.b1.p2': 'Sechs Status-Stufen mit Spaced Repetition: <strong style="color:#555">Nicht begonnen</strong> \u2192 <strong style="color:#d4a843">In Arbeit</strong> \u2192 <strong style="color:#a78bfa">Wiederholen</strong> \u2192 <strong style="color:#00b87a">Fertig</strong> \u2192 <strong style="color:#2563eb">1. Repetition</strong> \u2192 <strong style="color:#0ea5e9">2. Repetition</strong>. Per Klick wechseln, kein Aufwand.',
       'f.b2.tag': 'Smart', 'f.b2.title': 'Nie wieder raten, wo anfangen',
       'f.b2.p1': 'Die \u00abJetzt lernen\u00bb-Karte analysiert deinen Fortschritt und schl\u00e4gt dir automatisch das Fach mit den gr\u00f6ssten L\u00fccken vor \u2014 damit du sofort loslegen kannst, statt erst zu \u00fcberlegen.',
       'f.b2.p2': 'Die \u00dcbersichtsseite zeigt dir den Gesamtfortschritt aller F\u00e4cher als Fortschrittsbalken. Du siehst auf einen Blick, wo du stehst und was noch fehlt.',
@@ -185,7 +185,7 @@
       // FEATURES PAGE – blocks
       'f.b1.tag': 'Core feature', 'f.b1.title': 'See progress, don\'t guess',
       'f.b1.p1': 'For each subject you maintain a list of topics. Each topic gets a status per study category (e.g. lecture, exercise, summary). This way you can see exactly what you have mastered and where gaps remain.',
-      'f.b1.p2': 'Four status levels: <strong style="color:#555">Not started</strong> \u2192 <strong style="color:#d4a843">In progress</strong> \u2192 <strong style="color:#a78bfa">Review</strong> \u2192 <strong style="color:#00b87a">Done</strong>. Switch with a click, no effort.',
+      'f.b1.p2': 'Six status levels with spaced repetition: <strong style="color:#555">Not started</strong> \u2192 <strong style="color:#d4a843">In progress</strong> \u2192 <strong style="color:#a78bfa">Review</strong> \u2192 <strong style="color:#00b87a">Done</strong> \u2192 <strong style="color:#2563eb">1st Repetition</strong> \u2192 <strong style="color:#0ea5e9">2nd Repetition</strong>. Switch with a click, no effort.',
       'f.b2.tag': 'Smart', 'f.b2.title': 'Never guess where to start',
       'f.b2.p1': 'The \u201cStudy now\u201d card analyses your progress and automatically suggests the subject with the biggest gaps \u2014 so you can start right away instead of wondering what to do.',
       'f.b2.p2': 'The overview page shows the overall progress of all subjects as progress bars. See at a glance where you stand and what still needs work.',

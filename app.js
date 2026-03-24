@@ -82,13 +82,19 @@ var APP_T = {
         'in.progress': 'In Arbeit',
         'review': 'Wiederholen',
         'not.started': 'Noch nicht begonnen',
+        'rep1': '1. Repetition',
+        'rep2': '2. Repetition',
         'all.done': 'Alle: Fertig',
         'all.progress': 'Alle: In Arbeit',
         'all.review': 'Alles: Wiederholen',
+        'all.rep1': 'Alle: 1. Repetition',
+        'all.rep2': 'Alle: 2. Repetition',
         'all.reset': 'Alle zur\u00fccksetzen',
         'topic.all.done': 'Alles: Fertig',
         'topic.all.progress': 'Alles: In Arbeit',
         'topic.all.review': 'Alles: Wiederholen',
+        'topic.all.rep1': 'Alles: 1. Repetition',
+        'topic.all.rep2': 'Alles: 2. Repetition',
         'topic.reset': 'Zur\u00fccksetzen',
         'edit': 'Bearbeiten',
         'drag.hint': 'Ziehen zum Verschieben',
@@ -184,13 +190,19 @@ var APP_T = {
         'in.progress': 'In progress',
         'review': 'Review',
         'not.started': 'Not started',
+        'rep1': '1st Repetition',
+        'rep2': '2nd Repetition',
         'all.done': 'All: Done',
         'all.progress': 'All: In progress',
         'all.review': 'All: Review',
+        'all.rep1': 'All: 1st Repetition',
+        'all.rep2': 'All: 2nd Repetition',
         'all.reset': 'Reset all',
         'topic.all.done': 'All: Done',
         'topic.all.progress': 'All: In progress',
         'topic.all.review': 'All: Review',
+        'topic.all.rep1': 'All: 1st Repetition',
+        'topic.all.rep2': 'All: 2nd Repetition',
         'topic.reset': 'Reset',
         'edit': 'Edit',
         'drag.hint': 'Drag to reorder',
@@ -546,8 +558,8 @@ function loadTodos() { var r = localStorage.getItem("lf_todos"); return r ? JSON
 function saveTodos(l) { localStorage.setItem("lf_todos", JSON.stringify(l)); scheduleSync(); }
 
 // ---- Helpers ----
-var STATUS_CYCLE = ["none","progress","review","done"];
-var STATUS_VALUE = {none:0, progress:0.33, review:0.67, done:1};
+var STATUS_CYCLE = ["none","progress","review","done","rep1","rep2"];
+var STATUS_VALUE = {none:0, progress:0.25, review:0.5, done:0.75, rep1:0.9, rep2:1};
 
 function genId() { return "s"+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
 function esc(s) { var d=document.createElement("div"); d.textContent=s; return d.innerHTML; }
@@ -757,7 +769,7 @@ function renderStudyNext() {
         for(var i=0;i<subj.topics.length;i++){
             var tp=calcTopicPct(data,subj.id,i,subj.categories);
             if(tp<1){
-                var cat=null; subj.categories.forEach(function(c){if(!cat&&getStatus(data,subj.id,i,c)!=="done") cat=c;});
+                var cat=null; subj.categories.forEach(function(c){var st=getStatus(data,subj.id,i,c);if(!cat&&st!=="done"&&st!=="rep1"&&st!=="rep2") cat=c;});
                 var score=urg*10+tp*100;
                 if(score<bestScore){ bestScore=score; best={sid:subj.id,sname:subj.name,ti:i,tname:subj.topics[i],cat:cat,tp:tp,exam:subj.examDate}; }
                 break;
@@ -1788,7 +1800,7 @@ function markAllSubject(sid) {
     for(var i=0;i<subj.topics.length;i++) subj.categories.forEach(function(cat){
         var prev=getStatus(data,subj.id,i,cat);
         setStatus(data,subj.id,i,cat,target);
-        if(target==="done"&&prev!=="done") logCompletion(subj.id,i,cat);
+        if((target==="done"||target==="rep1"||target==="rep2")&&prev!==target) logCompletion(subj.id,i,cat);
     });
     saveStatuses(data); renderAll();
 }
@@ -1798,7 +1810,7 @@ function showBulkDropdown(anchor,sid,cat) {
     closeDropdown();
     var bd=document.createElement("div");bd.className="dropdown-backdrop";bd.onclick=closeDropdown;document.body.appendChild(bd);
     var dd=document.createElement("div");dd.className="status-dropdown";
-    [{l:t('all.done'),s:"done",ic:"\u2713",c:"i-done"},{l:t('all.progress'),s:"progress",ic:"\u270F",c:"i-progress"},{l:t('all.reset'),s:"none",ic:"\u2014",c:"i-none"}].forEach(function(o){
+    [{l:t('all.done'),s:"done",ic:"\u2713",c:"i-done"},{l:t('all.progress'),s:"progress",ic:"\u270F",c:"i-progress"},{l:t('all.rep1'),s:"rep1",ic:"\u2781",c:"i-rep1"},{l:t('all.rep2'),s:"rep2",ic:"\u2782",c:"i-rep2"},{l:t('all.reset'),s:"none",ic:"\u2014",c:"i-none"}].forEach(function(o){
         var opt=document.createElement("div");opt.className="dropdown-option";
         opt.innerHTML='<span class="option-icon '+o.c+'">'+o.ic+'</span><span>'+o.l+'</span>';
         opt.onclick=function(e){e.stopPropagation();bulkSetCat(sid,cat,o.s);closeDropdown();};
@@ -1817,7 +1829,7 @@ function bulkSetCat(sid,cat,status) {
     for(var i=0;i<subj.topics.length;i++){
         var prev=getStatus(d,subj.id,i,cat);
         setStatus(d,subj.id,i,cat,status);
-        if(status==="done"&&prev!=="done") logCompletion(subj.id,i,cat);
+        if((status==="done"||status==="rep1"||status==="rep2")&&prev!==status) logCompletion(subj.id,i,cat);
     }
     saveStatuses(d); renderSubjectAndOverview(sid);
 }
@@ -1827,7 +1839,7 @@ function showTopicBulkDropdown(anchor,sid,ti) {
     closeDropdown();
     var bd=document.createElement("div");bd.className="dropdown-backdrop";bd.onclick=closeDropdown;document.body.appendChild(bd);
     var dd=document.createElement("div");dd.className="status-dropdown";
-    [{l:t('topic.all.done'),s:"done",ic:"\u2713",c:"i-done"},{l:t('topic.all.progress'),s:"progress",ic:"\u270F",c:"i-progress"},{l:t('topic.all.review'),s:"review",ic:"\u21BA",c:"i-review"},{l:t('topic.reset'),s:"none",ic:"\u2014",c:"i-none"}].forEach(function(o){
+    [{l:t('topic.all.done'),s:"done",ic:"\u2713",c:"i-done"},{l:t('topic.all.progress'),s:"progress",ic:"\u270F",c:"i-progress"},{l:t('topic.all.review'),s:"review",ic:"\u21BA",c:"i-review"},{l:t('topic.all.rep1'),s:"rep1",ic:"\u2781",c:"i-rep1"},{l:t('topic.all.rep2'),s:"rep2",ic:"\u2782",c:"i-rep2"},{l:t('topic.reset'),s:"none",ic:"\u2014",c:"i-none"}].forEach(function(o){
         var opt=document.createElement("div");opt.className="dropdown-option";
         opt.innerHTML='<span class="option-icon '+o.c+'">'+o.ic+'</span><span>'+o.l+'</span>';
         opt.onclick=function(e){e.stopPropagation();bulkSetTopic(sid,ti,o.s);closeDropdown();};
@@ -1846,14 +1858,14 @@ function bulkSetTopic(sid,ti,status) {
     subj.categories.forEach(function(cat){
         var prev=getStatus(d,subj.id,ti,cat);
         setStatus(d,subj.id,ti,cat,status);
-        if(status==="done"&&prev!=="done") logCompletion(subj.id,ti,cat);
+        if((status==="done"||status==="rep1"||status==="rep2")&&prev!==status) logCompletion(subj.id,ti,cat);
     });
     saveStatuses(d); renderSubjectAndOverview(sid);
 }
 
 // ---- Status dropdown ----
-function DLABELS_get(s){return{none:t('not.started'),progress:t('in.progress'),review:t('review'),done:t('done')}[s]||s;}
-var DICONS={none:"\u2014",progress:"\u270F",review:"\u21BA",done:"\u2713"};
+function DLABELS_get(s){return{none:t('not.started'),progress:t('in.progress'),review:t('review'),done:t('done'),rep1:t('rep1'),rep2:t('rep2')}[s]||s;}
+var DICONS={none:"\u2014",progress:"\u270F",review:"\u21BA",done:"\u2713",rep1:"\u2781",rep2:"\u2782"};
 function closeDropdown(){var e=document.querySelector(".status-dropdown");if(e)e.remove();var b=document.querySelector(".dropdown-backdrop");if(b)b.remove();}
 
 function showStatusDropdown(cell) {
@@ -1868,7 +1880,7 @@ function showStatusDropdown(cell) {
         opt.onclick=function(e){e.stopPropagation();
             var d2=loadStatuses(),prev=getStatus(d2,sk,ti,cat);
             setStatus(d2,sk,ti,cat,st); saveStatuses(d2);
-            if(st==="done"&&prev!=="done") logCompletion(sk,ti,cat);
+            if((st==="done"||st==="rep1"||st==="rep2")&&prev!==st) logCompletion(sk,ti,cat);
             closeDropdown(); renderSubjectAndOverview(sk);};
         dd.appendChild(opt);
     });

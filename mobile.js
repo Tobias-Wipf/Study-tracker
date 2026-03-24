@@ -591,6 +591,8 @@ function showMobileStatusDropdown(chip, subjectId, view) {
         { status: "done", label: t("done"), icon: "\u2713", color: "#00b87a" },
         { status: "progress", label: t("in.progress"), icon: "\u270F", color: "#d4a843" },
         { status: "review", label: t("review"), icon: "\u21BA", color: "#a78bfa" },
+        { status: "rep1", label: t("rep1"), icon: "\u2781", color: "#2563eb" },
+        { status: "rep2", label: t("rep2"), icon: "\u2782", color: "#0ea5e9" },
         { status: "none", label: t("not.started"), icon: "\u2014", color: "#666" }
     ];
 
@@ -619,7 +621,7 @@ function showMobileStatusDropdown(chip, subjectId, view) {
             var prev = getStatus(d2, sid, ti, cat);
             setStatus(d2, sid, ti, cat, o.status);
             saveStatuses(d2);
-            if (o.status === "done" && prev !== "done") logCompletion(sid, ti, cat);
+            if ((o.status === "done" || o.status === "rep1" || o.status === "rep2") && prev !== o.status) logCompletion(sid, ti, cat);
             closeMobileDropdown();
             renderMobileSubjectDetail(view, subjectId);
         };

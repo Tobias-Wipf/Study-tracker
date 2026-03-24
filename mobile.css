@@ -391,9 +391,13 @@ body.dark .m-status-chip { background: #222; }
 .m-chip-dot.s-progress { background: #d4a843; }
 .m-chip-dot.s-review { background: #a78bfa; }
 .m-chip-dot.s-done { background: #00b87a; }
+.m-chip-dot.s-rep1 { background: #2563eb; }
+.m-chip-dot.s-rep2 { background: #0ea5e9; }
 .m-status-chip.active-done { background: rgba(0,184,122,.12); color: #00b87a; }
 .m-status-chip.active-progress { background: rgba(212,168,67,.12); color: #d4a843; }
 .m-status-chip.active-review { background: rgba(167,139,250,.12); color: #a78bfa; }
+.m-status-chip.active-rep1 { background: rgba(37,99,235,.12); color: #2563eb; }
+.m-status-chip.active-rep2 { background: rgba(14,165,233,.12); color: #0ea5e9; }
 
 /* ---- Daily Goal Card ---- */
 .m-goal-card {
