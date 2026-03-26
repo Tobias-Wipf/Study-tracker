@@ -1,4 +1,4 @@
-var CACHE_NAME = 'studytracker-v124';
+var CACHE_NAME = 'studytracker-v125';
 var ASSETS = [
     '/',
     '/index.html',
