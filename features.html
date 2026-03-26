@@ -136,7 +136,7 @@
         </div>
         <div class="lp-nav-right">
             <button class="lp-lang-toggle" id="lang-toggle">EN</button>
-            <button class="lp-nav-btn" onclick="window.location.href='index.html?action=signin'" data-i18n="nav.signin">Anmelden</button>
+            <button class="lp-nav-btn" id="nav-signin-btn" data-i18n="nav.signin">Anmelden</button>
         </div>
         <button class="lp-hamburger" id="lp-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
@@ -479,8 +479,36 @@
     </div>
 </footer>
 
+<script src="https://www.gstatic.com/firebasejs/12.10.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.10.0/firebase-auth-compat.js"></script>
 <script src="i18n.js"></script>
 <script>
+    // Firebase init (auth only)
+    firebase.initializeApp({
+        apiKey: "AIzaSyDAJ2aFNR09A3eK3amQjiAtfBfvG2NWxRI",
+        authDomain: "study-tracker.org",
+        projectId: "studytracker-deb23",
+        storageBucket: "studytracker-deb23.firebasestorage.app",
+        messagingSenderId: "215256055720",
+        appId: "1:215256055720:web:ae3bdce0137d128d14279d"
+    });
+    var auth = firebase.auth();
+
+    // If already logged in, redirect to app
+    auth.onAuthStateChanged(function(user) {
+        if (user) window.location.href = 'index.html';
+    });
+
+    // Anmelden button triggers Google login directly
+    document.getElementById('nav-signin-btn').onclick = function() {
+        var provider = new firebase.auth.GoogleAuthProvider();
+        auth.signInWithPopup(provider).then(function() {
+            window.location.href = 'index.html';
+        }).catch(function(err) {
+            if (err.code !== 'auth/popup-closed-by-user') alert('Anmeldung fehlgeschlagen: ' + err.message);
+        });
+    };
+
     // Scroll animations
     var observer = new IntersectionObserver(function(entries) {
         entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('lp-visible'); });
