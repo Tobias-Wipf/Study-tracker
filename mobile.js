@@ -57,10 +57,10 @@ function showIOSInstallGuide() {
 
     // Force dark background everywhere (prevent white bar on iOS)
     document.documentElement.style.cssText = 'background:#0f0f0f !important';
-    document.body.style.cssText += ';background:#0f0f0f !important';
-    view.style.background = '#0f0f0f';
+    document.body.style.cssText += ';background:#0f0f0f !important;overflow:hidden';
+    view.style.cssText = 'flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0;background:#0f0f0f';
     var mobileApp = document.getElementById('mobile-app');
-    if (mobileApp) mobileApp.style.background = '#0f0f0f';
+    if (mobileApp) mobileApp.style.cssText = 'display:flex;flex-direction:column;height:100vh;height:100dvh;background:#0f0f0f';
     // Update theme-color meta tag
     var themeMeta = document.querySelector('meta[name="theme-color"]');
     if (themeMeta) themeMeta.content = '#0f0f0f';
