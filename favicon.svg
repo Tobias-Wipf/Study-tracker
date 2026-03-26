@@ -1,4 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Background -->
   <rect width="512" height="512" rx="96" fill="#006849"/>
-  <text x="256" y="380" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="400" fill="#ffffff" text-anchor="middle">S</text>
+  <!-- Book / page shape -->
+  <rect x="126" y="80" width="260" height="340" rx="22" fill="#ffffff"/>
+  <!-- Spine accent -->
+  <rect x="126" y="80" width="16" height="340" rx="8" fill="#004d34"/>
+  <!-- Lines on page -->
+  <rect x="174" y="140" width="170" height="12" rx="6" fill="#b2d8c8"/>
+  <rect x="174" y="178" width="140" height="12" rx="6" fill="#c5e2d5"/>
+  <rect x="174" y="216" width="155" height="12" rx="6" fill="#d6ece2"/>
+  <rect x="174" y="254" width="125" height="12" rx="6" fill="#e2f2ea"/>
+  <!-- Checkmark circle -->
+  <circle cx="306" cy="344" r="72" fill="#00c778"/>
+  <circle cx="306" cy="344" r="60" fill="#00e88a"/>
+  <!-- Checkmark -->
+  <polyline points="276,344 296,368 338,318" fill="none" stroke="#004d34" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- "S" badge top-right -->
+  <circle cx="386" cy="80" r="42" fill="#ffffff"/>
+  <circle cx="386" cy="80" r="35" fill="#006849"/>
+  <path d="M376 70c1-4 4-7 10-7s9 3 9 7c0 4-2 6-7 8l-5 3c-5 2-8 5-8 10 0 6 4 10 11 10 5 0 9-3 10-7" fill="none" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/>
 </svg>
