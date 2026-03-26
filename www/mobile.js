@@ -55,12 +55,16 @@ function showIOSInstallGuide() {
     if (tabBar) tabBar.style.display = "none";
     if (!view) return;
 
-    // Force dark background everywhere
-    document.documentElement.style.background = '#0f0f0f';
-    document.body.style.background = '#0f0f0f';
+    // Force dark background everywhere (prevent white bar on iOS)
+    document.documentElement.style.cssText = 'background:#0f0f0f !important';
+    document.body.style.cssText += ';background:#0f0f0f !important';
     view.style.background = '#0f0f0f';
     var mobileApp = document.getElementById('mobile-app');
     if (mobileApp) mobileApp.style.background = '#0f0f0f';
+    // Update theme-color meta tag
+    var themeMeta = document.querySelector('meta[name="theme-color"]');
+    if (themeMeta) themeMeta.content = '#0f0f0f';
+    else { themeMeta = document.createElement('meta'); themeMeta.name = 'theme-color'; themeMeta.content = '#0f0f0f'; document.head.appendChild(themeMeta); }
 
     var t = iosInstallStrings[iosInstallLang];
 
