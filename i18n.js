@@ -120,6 +120,7 @@
       // ABOUT PAGE – Tech
       'a.tech.label': 'Technologie', 'a.tech.title': 'Womit Studytracker gebaut ist.',
       'a.tech.desc': 'Studytracker ist bewusst schlank gehalten — kein Framework-Overhead, nur das, was wirklich gebraucht wird.',
+      'a.tech.opensource': 'Studytracker ist Open Source. Der gesamte Code ist \u00f6ffentlich einsehbar und kann auf <a href="https://github.com/Tobias-Wipf/Study-tracker" target="_blank" rel="noopener" style="color:#00b87a;text-decoration:underline;">GitHub</a> eingesehen werden.',
       // ABOUT PAGE – About me
       'a.me.label': '\u00dcber uns', 'a.me.title': 'Die Entwickler',
       'a.me.p1': 'Studytracker ist aus einem echten Problem entstanden: Im Assessmentjahr jongliert man gleichzeitig mit mehreren F\u00e4chern, Pr\u00fcfungsterminen und Lernstoff \u2013 und verliert dabei schnell den \u00dcberblick. Bestehende Tools haben uns nie wirklich \u00fcberzeugt. Also haben wir kurzerhand selbst eine L\u00f6sung gebaut.',
@@ -232,6 +233,7 @@
       // ABOUT PAGE – Tech
       'a.tech.label': 'Technology', 'a.tech.title': 'What Studytracker is built with.',
       'a.tech.desc': 'Studytracker is intentionally lean — no framework overhead, only what is really needed.',
+      'a.tech.opensource': 'Studytracker is open source. The entire codebase is publicly available and can be reviewed on <a href="https://github.com/Tobias-Wipf/Study-tracker" target="_blank" rel="noopener" style="color:#00b87a;text-decoration:underline;">GitHub</a>.',
       // ABOUT PAGE – About me
       'a.me.label': 'About us', 'a.me.title': 'The developers',
       'a.me.p1': 'Studytracker was born from a real problem: during the assessment year, you\'re juggling multiple subjects, exam dates, and study material all at once \u2013 and you quickly lose track. Existing tools never really convinced us. So we decided to build our own solution.',
