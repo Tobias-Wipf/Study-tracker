@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>Features – Studytracker</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Source Sans 3", sans-serif; background: #0a0a0a; color: #e0e0e0; line-height: 1.6; }
+
+        /* Nav — reuse landing page classes */
+
+        /* Hero */
+        .hero { position: relative; min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; overflow: hidden; }
+        .hero-bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 50%; z-index: 0; }
+        .hero-overlay { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,.15) 0%, rgba(0,0,0,.6) 55%, rgba(0,0,0,.8) 100%); z-index: 1; }
+        .hero-content { position: relative; z-index: 2; padding: 160px 32px 100px; max-width: 700px; margin: 0 auto; }
+        .eyebrow { font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #6ee7b7; margin-bottom: 16px; }
+        .hero h1 { font-size: clamp(2.4rem, 5vw, 3.8rem); font-weight: 700; line-height: 1.08; letter-spacing: -.03em; color: #fff; margin-bottom: 20px; }
+        .hero p { font-size: 1.1rem; color: rgba(255,255,255,.75); max-width: 560px; margin: 0 auto 40px; }
+        .hero-btn { display: inline-flex; align-items: center; gap: 10px; background: #fff; color: #111; border: none; border-radius: 980px; padding: 20px 44px; font-size: 1.15rem; font-weight: 600; cursor: pointer; font-family: inherit; text-decoration: none; transition: transform .2s, box-shadow .2s; box-shadow: 0 4px 24px rgba(0,0,0,.4); }
+        .hero-btn:hover { transform: scale(1.03); box-shadow: 0 8px 36px rgba(0,0,0,.5); }
+
+        /* Section */
+        .section { padding: 80px 32px; }
+        .section-inner { max-width: 1080px; margin: 0 auto; }
+        .section-label { font-size: .8rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #00b87a; margin-bottom: 12px; }
+        .section-title { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; letter-spacing: -.025em; color: #f0f0f0; margin-bottom: 16px; }
+        .section-sub { font-size: 1rem; color: #888; max-width: 560px; margin-bottom: 56px; line-height: 1.7; }
+
+        /* Feature blocks — alternating layout */
+        .feature-block { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; padding: 64px 0; border-top: 1px solid #1c1c1c; }
+        .feature-block:first-child { border-top: none; }
+        .feature-block.reverse .feature-visual { order: -1; }
+        .feature-text h3 { font-size: 1.6rem; font-weight: 700; color: #f0f0f0; letter-spacing: -.02em; margin-bottom: 12px; }
+        .feature-text p { font-size: 1rem; color: #888; line-height: 1.75; margin-bottom: 20px; }
+        .feature-tag { display: inline-block; background: rgba(0,184,122,.12); color: #00b87a; border-radius: 6px; padding: 4px 10px; font-size: .78rem; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+        .feature-steps { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 14px; }
+        .feature-steps li { display: flex; align-items: flex-start; gap: 14px; font-size: .95rem; color: #aaa; }
+        .step-num { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; background: #1a1a1a; border: 1px solid #2d2d2d; color: #fff; font-size: .78rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+
+        /* Visual cards */
+        .feature-visual { background: #111; border: 1px solid #1e1e1e; border-radius: 16px; padding: 32px; min-height: 260px; display: flex; align-items: center; justify-content: center; }
+        .visual-icon { font-size: 4rem; margin-bottom: 16px; display: block; text-align: center; }
+
+        /* Mini mockups inside feature visuals */
+        .mini-table { width: 100%; border-collapse: collapse; font-size: .82rem; background: #111; }
+        .mini-table th { color: #888; font-weight: 600; text-transform: uppercase; font-size: .72rem; letter-spacing: .06em; padding: 8px 10px; border-bottom: 1px solid #2d2d2d; text-align: left; background: #161616; }
+        .mini-table td { padding: 10px; border-bottom: 1px solid #1e1e1e; color: #ccc; background: #111; }
+        .mini-table tr:last-child td { border-bottom: none; }
+        .status-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .72rem; font-weight: 700; }
+        .pill-done { background: rgba(0,184,122,.15); color: #00b87a; }
+        .pill-prog { background: rgba(212,168,67,.15); color: #d4a843; }
+        .pill-none { background: rgba(255,255,255,.06); color: #555; }
+        .pill-rev  { background: rgba(124,58,237,.15); color: #a78bfa; }
+
+        .mini-bar-row { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        .mini-bar-item { display: flex; align-items: center; gap: 12px; font-size: .82rem; }
+        .mini-bar-label { width: 80px; color: #888; flex-shrink: 0; }
+        .mini-bar-track { flex: 1; height: 6px; background: #1e1e1e; border-radius: 3px; overflow: hidden; }
+        .mini-bar-fill { height: 100%; border-radius: 3px; }
+        .mini-bar-pct { width: 32px; text-align: right; color: #555; font-size: .78rem; }
+
+        .mini-calendar { width: 100%; }
+        .mini-cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; color: #f0f0f0; font-weight: 600; font-size: .9rem; }
+        .mini-cal-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+        .mini-cal-day { aspect-ratio: 1; display: flex; align-items: center; justify-content: center; font-size: .75rem; border-radius: 6px; color: #555; }
+        .mini-cal-day.has-event { background: rgba(0,184,122,.15); color: #00b87a; font-weight: 700; }
+        .mini-cal-day.today { background: #00b87a; color: #000; font-weight: 700; }
+        .mini-cal-day.label { color: #333; font-size: .7rem; font-weight: 700; text-transform: uppercase; }
+
+        .mini-planner { width: 100%; display: flex; flex-direction: column; gap: 8px; }
+        .mini-planner-row { background: #1a1a1a; border-radius: 8px; padding: 10px 14px; display: flex; align-items: center; gap: 12px; }
+        .mini-planner-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+        .mini-planner-text { font-size: .82rem; color: #ccc; }
+        .mini-planner-time { font-size: .75rem; color: #555; margin-left: auto; }
+
+        .mini-goal { text-align: center; width: 100%; }
+        .goal-circle { position: relative; width: 120px; height: 120px; margin: 0 auto 16px; }
+        .goal-circle svg { transform: rotate(-90deg); }
+        .goal-circle-text { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; flex-direction: column; }
+        .goal-pct { font-size: 1.8rem; font-weight: 700; color: #f0f0f0; line-height: 1; }
+        .goal-label-sm { font-size: .72rem; color: #555; margin-top: 2px; }
+        .goal-legend { display: flex; justify-content: center; gap: 20px; font-size: .8rem; color: #666; }
+        .goal-legend span { display: flex; align-items: center; gap: 6px; }
+        .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+        /* Setup section */
+        .setup-section { background: #0a0a0a; border-top: 1px solid #141414; border-bottom: 1px solid #141414; }
+        .setup-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; margin-top: 40px; }
+        .setup-step { background: #111; border: 1px solid #1c1c1c; border-radius: 12px; padding: 28px; }
+        .setup-step-num { width: 36px; height: 36px; border-radius: 50%; background: #00b87a; color: #000; font-weight: 700; font-size: .9rem; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; }
+        .setup-step h4 { font-size: 1rem; font-weight: 700; color: #f0f0f0; margin-bottom: 8px; }
+        .setup-step p { font-size: .88rem; color: #777; line-height: 1.6; }
+
+        /* CTA */
+        .cta { padding: 100px 32px; text-align: center; background: #0a0a0a; }
+        .cta h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 700; color: #f0f0f0; letter-spacing: -.025em; margin-bottom: 16px; }
+        .cta p { color: #666; font-size: 1rem; margin-bottom: 36px; }
+
+        /* Footer */
+        footer { background: #0a0a0a; border-top: 1px solid #1a1a1a; padding: 24px 32px; text-align: center; font-size: .82rem; color: #444; }
+
+        /* Animations */
+        .lp-animate { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+        .lp-animate--delay { transition-delay:.18s; }
+        .lp-visible { opacity:1; transform:none; }
+
+        @media (max-width: 720px) {
+            .feature-block { grid-template-columns: 1fr; gap: 32px; }
+            .feature-block.reverse .feature-visual { order: 0; }
+            .setup-steps { grid-template-columns: 1fr; }
+            .feature-visual { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+            .mini-table { font-size: .75rem; }
+            .mini-table th, .mini-table td { padding: 8px 6px; }
+        }
+    </style>
+</head>
+<body>
+
+<nav class="lp-nav" id="lp-nav">
+    <div class="lp-nav-inner">
+        <div class="lp-nav-left">
+            <a href="index.html" class="lp-logo" style="text-decoration:none">Studytracker</a>
+            <a href="features.html" class="lp-nav-link" style="color:#fff">Features</a>
+            <a href="features.html#how-it-works" class="lp-nav-link" data-i18n="nav.hiw">How it works</a>
+            <a href="index.html#faq" class="lp-nav-link">FAQ</a>
+            <a href="about.html" class="lp-nav-link">About</a>
+        </div>
+        <div class="lp-nav-right">
+            <button class="lp-lang-toggle" id="lang-toggle">EN</button>
+            <button class="lp-nav-btn" onclick="window.location.href='index.html?action=signin'" data-i18n="nav.signin">Anmelden</button>
+        </div>
+        <button class="lp-hamburger" id="lp-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <img src="Campus_2.jpeg" alt="Campus" class="hero-bg" loading="eager">
+    <div class="hero-overlay"></div>
+    <div class="hero-content lp-animate">
+        <p class="eyebrow" data-i18n="f.hero.eyebrow">Funktionen im Überblick</p>
+        <h1 data-i18n-html="f.hero.headline">Alles, was du für<br>erfolgreiches Studieren brauchst.</h1>
+        <p data-i18n="f.hero.subhead">Lade eine Vorlage, sieh wo du stehst, und die App sagt dir, was als n&auml;chstes dran ist &mdash; kostenlos und ohne Installation.</p>
+        <a href="index.html" class="hero-btn">
+            <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 6.293C4.672 4.166 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+            <span data-i18n="f.hero.cta">Kostenlos starten</span>
+        </a>
+    </div>
+</section>
+
+<!-- Feature blocks -->
+<section class="section">
+    <div class="section-inner">
+
+        <!-- 1. Vorlagen -->
+        <div class="feature-block lp-animate">
+            <div class="feature-text">
+                <span class="feature-tag" data-i18n="f.b7.tag">Kern-Feature</span>
+                <h3 style="margin-top:12px;" data-i18n="f.b7.title">Vorlage laden, sofort starten</h3>
+                <p data-i18n="f.b7.p1">Du musst nicht alles selbst eintippen. Lade die F&auml;cher-Struktur deiner Vorg&auml;nger mit einem Klick &mdash; alle Themen, Kategorien und Pr&uuml;fungstermine sind sofort da.</p>
+                <p data-i18n="f.b7.p2">Ideal f&uuml;r den Semesterstart: Eine Person legt die Struktur an, alle anderen profitieren. Du kannst auch eigene Vorlagen teilen oder aus Excel-Dateien und Bildern (per OCR) importieren.</p>
+            </div>
+            <div class="feature-visual">
+                <div style="background:#111;border:1px solid #1c1c1c;border-radius:12px;padding:18px 18px 14px;display:flex;flex-direction:column;gap:0;max-width:370px;">
+                    <!-- Modal title -->
+                    <div style="font-size:1rem;font-weight:700;color:#fff;margin-bottom:12px;">Vorlagen-Bibliothek</div>
+                    <!-- Tabs -->
+                    <div style="display:flex;gap:0;margin-bottom:12px;border-bottom:1px solid #222;">
+                        <div style="padding:7px 14px;font-size:.78rem;font-weight:600;color:#00b87a;border-bottom:2px solid #00b87a;">Bibliothek</div>
+                        <div style="padding:7px 14px;font-size:.78rem;font-weight:500;color:#666;">Importieren</div>
+                        <div style="padding:7px 14px;font-size:.78rem;font-weight:500;color:#666;">Teilen</div>
+                    </div>
+                    <!-- Level filters -->
+                    <div style="display:flex;gap:6px;margin-bottom:14px;">
+                        <span style="padding:4px 10px;font-size:.68rem;font-weight:600;background:#00b87a;color:#fff;border-radius:6px;">Alle</span>
+                        <span style="padding:4px 10px;font-size:.68rem;font-weight:500;background:#1a1a1a;color:#888;border-radius:6px;">Assessment</span>
+                        <span style="padding:4px 10px;font-size:.68rem;font-weight:500;background:#1a1a1a;color:#888;border-radius:6px;">Bachelor</span>
+                        <span style="padding:4px 10px;font-size:.68rem;font-weight:500;background:#1a1a1a;color:#888;border-radius:6px;">Master</span>
+                    </div>
+                    <!-- Preset card 1 -->
+                    <div style="background:#1a1a1a;border-radius:10px;padding:14px;margin-bottom:8px;border-left:3px solid #00b87a;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                            <span style="font-size:.82rem;font-weight:700;color:#fff;">VWL Grundlagen UZH</span>
+                            <span style="font-size:.62rem;font-weight:600;color:#d4a843;background:#2a2210;padding:2px 8px;border-radius:4px;">Assessment</span>
+                        </div>
+                        <div style="font-size:.72rem;color:#888;margin-bottom:6px;">Mikro&ouml;konomie, Makro&ouml;konomie, Wirtschaftspolitik</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span style="font-size:.68rem;color:#666;">3 F&auml;cher, 42 Themen &middot; von Anna M.</span>
+                            <span style="font-size:.68rem;font-weight:600;color:#00b87a;cursor:default;">Importieren</span>
+                        </div>
+                    </div>
+                    <!-- Preset card 2 -->
+                    <div style="background:#1a1a1a;border-radius:10px;padding:14px;">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                            <span style="font-size:.82rem;font-weight:700;color:#fff;">BWL &amp; Recht HS26</span>
+                            <span style="font-size:.62rem;font-weight:600;color:#7c9aed;background:#161a2e;padding:2px 8px;border-radius:4px;">Bachelor</span>
+                        </div>
+                        <div style="font-size:.72rem;color:#888;margin-bottom:6px;">Unternehmensf&uuml;hrung, Privatrecht, Obligationenrecht</div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;">
+                            <span style="font-size:.68rem;color:#666;">4 F&auml;cher, 58 Themen &middot; von Luca T.</span>
+                            <span style="font-size:.68rem;font-weight:600;color:#00b87a;cursor:default;">Importieren</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Study Next -->
+        <div class="feature-block reverse lp-animate">
+            <div class="feature-text">
+                <span class="feature-tag" data-i18n="f.b2.tag">Smart</span>
+                <h3 style="margin-top:12px;" data-i18n="f.b2.title">Nie wieder raten, wo anfangen</h3>
+                <p data-i18n="f.b2.p1">Die &laquo;Jetzt lernen&raquo;-Karte analysiert deinen Fortschritt und schl&auml;gt dir automatisch das Fach mit den gr&ouml;ssten L&uuml;cken vor &mdash; damit du sofort loslegen kannst, statt erst zu &uuml;berlegen.</p>
+                <p data-i18n="f.b2.p2">Die &Uuml;bersichtsseite zeigt dir den Gesamtfortschritt aller F&auml;cher als Fortschrittsbalken. Du siehst auf einen Blick, wo du stehst und was noch fehlt.</p>
+            </div>
+            <div class="feature-visual">
+                <div class="mini-bar-row">
+                    <div class="mini-bar-item">
+                        <span class="mini-bar-label">VWL</span>
+                        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:72%;background:#00b87a"></div></div>
+                        <span class="mini-bar-pct">72%</span>
+                    </div>
+                    <div class="mini-bar-item">
+                        <span class="mini-bar-label">Mathematik</span>
+                        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:48%;background:#d4a843"></div></div>
+                        <span class="mini-bar-pct">48%</span>
+                    </div>
+                    <div class="mini-bar-item">
+                        <span class="mini-bar-label">BWL</span>
+                        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:85%;background:#00b87a"></div></div>
+                        <span class="mini-bar-pct">85%</span>
+                    </div>
+                    <div class="mini-bar-item">
+                        <span class="mini-bar-label">Recht</span>
+                        <div class="mini-bar-track"><div class="mini-bar-fill" style="width:31%;background:#dc2626"></div></div>
+                        <span class="mini-bar-pct">31%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. Fortschritt tracken -->
+        <div class="feature-block lp-animate">
+            <div class="feature-text">
+                <span class="feature-tag" data-i18n="f.b1.tag">Kern-Feature</span>
+                <h3 style="margin-top:12px;" data-i18n="f.b1.title">Fortschritt sehen, nicht sch&auml;tzen</h3>
+                <p data-i18n="f.b1.p1">F&uuml;r jedes Fach pflegst du eine Liste von Themen. Jedes Thema bekommt pro Lernkategorie (z.B. Vorlesung, &Uuml;bung, Zusammenfassung) einen Status. So siehst du genau, was schon sitzt und wo noch L&uuml;cken sind.</p>
+                <p data-i18n-html="f.b1.p2">Vier Status-Stufen: <strong style="color:#555">Nicht begonnen</strong> &rarr; <strong style="color:#d4a843">In Arbeit</strong> &rarr; <strong style="color:#a78bfa">Wiederholen</strong> &rarr; <strong style="color:#00b87a">Fertig</strong>. Per Klick wechseln, kein Aufwand.</p>
+            </div>
+            <div class="feature-visual">
+                <table class="mini-table">
+                    <thead>
+                        <tr>
+                            <th>Thema</th>
+                            <th>VL</th>
+                            <th>&Uuml;bung</th>
+                            <th>ZF</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Angebot &amp; Nachfrage</td><td><span class="status-pill pill-done">&#10004;</span></td><td><span class="status-pill pill-done">&#10004;</span></td><td><span class="status-pill pill-done">&#10004;</span></td></tr>
+                        <tr><td>Elastizit&auml;t</td><td><span class="status-pill pill-done">&#10004;</span></td><td><span class="status-pill pill-prog">&#128260;</span></td><td><span class="status-pill pill-none">&mdash;</span></td></tr>
+                        <tr><td>Marktversagen</td><td><span class="status-pill pill-prog">&#128260;</span></td><td><span class="status-pill pill-none">&mdash;</span></td><td><span class="status-pill pill-none">&mdash;</span></td></tr>
+                        <tr><td>Spieltheorie</td><td><span class="status-pill pill-rev">&#8634;</span></td><td><span class="status-pill pill-rev">&#8634;</span></td><td><span class="status-pill pill-none">&mdash;</span></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 4. To-Do -->
+        <div class="feature-block reverse lp-animate">
+            <div class="feature-text">
+                <span class="feature-tag" data-i18n="f.b3.tag">To-Do</span>
+                <h3 style="margin-top:12px;" data-i18n="f.b3.title">Aufgaben im Griff</h3>
+                <p data-i18n="f.b3.p1">Aufgaben mit Priorit&auml;t, F&auml;lligkeitsdatum und Fach-Zuordnung &mdash; alles an einem Ort statt &uuml;ber drei Apps verteilt.</p>
+                <p data-i18n="f.b3.p2">Filtere nach offenen oder erledigten Aufgaben und sortiere nach Priorit&auml;t oder Datum. &Uuml;berf&auml;llige Aufgaben werden automatisch hervorgehoben.</p>
+            </div>
+            <div class="feature-visual">
+                <div style="width:100%;display:flex;flex-direction:column;gap:10px;">
+                    <div style="background:#1a1a1a;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px;">
+                        <span style="width:20px;height:20px;border-radius:50%;border:2px solid #dc2626;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:#dc2626;font-weight:700;">!</span>
+                        <div style="flex:1;">
+                            <div style="color:#f0f0f0;font-size:.85rem;font-weight:600;">&Uuml;bungsblatt 5 abgeben</div>
+                            <div style="color:#555;font-size:.72rem;margin-top:2px;">VWL &middot; F&auml;llig: morgen</div>
+                        </div>
+                        <span style="font-size:.72rem;color:#dc2626;font-weight:700;">Hoch</span>
+                    </div>
+                    <div style="background:#1a1a1a;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px;">
+                        <span style="width:20px;height:20px;border-radius:50%;border:2px solid #d4a843;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.65rem;color:#d4a843;font-weight:700;">!</span>
+                        <div style="flex:1;">
+                            <div style="color:#f0f0f0;font-size:.85rem;font-weight:600;">Zusammenfassung Kapitel 3</div>
+                            <div style="color:#555;font-size:.72rem;margin-top:2px;">Mathe &middot; F&auml;llig: Fr, 20. M&auml;rz</div>
+                        </div>
+                        <span style="font-size:.72rem;color:#d4a843;font-weight:700;">Mittel</span>
+                    </div>
+                    <div style="background:#1a1a1a;border-radius:10px;padding:14px 18px;display:flex;align-items:center;gap:12px;opacity:.5;">
+                        <span style="width:20px;height:20px;border-radius:50%;background:#00b87a;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.7rem;color:#000;">&#10003;</span>
+                        <div style="flex:1;">
+                            <div style="color:#888;font-size:.85rem;font-weight:600;text-decoration:line-through;">Altklausur durcharbeiten</div>
+                            <div style="color:#444;font-size:.72rem;margin-top:2px;">Recht &middot; Erledigt</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Daily Dopamine Boost -->
+        <div class="feature-block reverse lp-animate">
+            <div class="feature-text">
+                <span class="feature-tag" data-i18n="f.b4.tag">Motivation</span>
+                <h3 style="margin-top:12px;" data-i18n="f.b4.title">Daily Dopamine Boost</h3>
+                <p data-i18n="f.b4.p1">Setze ein tägliches Lernziel und sieh mit einem animierten Fortschrittsring, wie weit du heute schon bist — ein einfacher, ehrlicher Motivations-Check.</p>
+                <p data-i18n="f.b4.p2">Jede abgeschlossene Lerneinheit wird automatisch gezählt. Der Fortschritt wird täglich zurückgesetzt — jeden Tag ein neuer Start.</p>
+            </div>
+            <div class="feature-visual">
+                <div class="mini-goal">
+                    <div class="goal-circle">
+                        <svg width="120" height="120" viewBox="0 0 120 120">
+                            <circle cx="60" cy="60" r="50" fill="none" stroke="#1e1e1e" stroke-width="10"/>
+                            <circle cx="60" cy="60" r="50" fill="none" stroke="#00b87a" stroke-width="10" stroke-dasharray="314" stroke-dashoffset="126" stroke-linecap="round"/>
+                        </svg>
+                        <div class="goal-circle-text">
+                            <span class="goal-pct">60%</span>
+                            <span class="goal-label-sm">3 / 5</span>
+                        </div>
+                    </div>
+                    <div class="goal-legend">
+                        <span><span class="legend-dot" style="background:#00b87a"></span>Heute erledigt</span>
+                        <span><span class="legend-dot" style="background:#1e1e1e"></span>Verbleibend</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. Prüfungs-Countdown -->
+        <div class="feature-block lp-animate">
+            <div class="feature-text">
+                <span class="feature-tag" data-i18n="f.b5.tag">Prüfungen</span>
+                <h3 style="margin-top:12px;" data-i18n="f.b5.title">Prüfungs-Countdown</h3>
+                <p data-i18n="f.b5.p1">Trage deine Prüfungstermine ein und sieh auf einen Blick, wie viele Tage noch bleiben. Je näher die Prüfung rückt, desto auffälliger die Anzeige — damit du nie unvorbereitet in eine Prüfung gehst.</p>
+                <p data-i18n="f.b5.p2">Die Prüfungen werden nach Datum sortiert. Die nächste Prüfung steht immer oben.</p>
+            </div>
+            <div class="feature-visual">
+                <div style="width:100%;display:flex;flex-direction:column;gap:10px;">
+                    <div style="background:#1a1a1a;border-radius:10px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;">
+                        <div>
+                            <div style="color:#f0f0f0;font-size:.88rem;font-weight:600;">VWL Abschlussprüfung</div>
+                            <div style="color:#555;font-size:.78rem;margin-top:2px;">Di, 8. April 2026</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="color:#dc2626;font-size:1.4rem;font-weight:700;line-height:1;">23</div>
+                            <div style="color:#555;font-size:.72rem;">Tage</div>
+                        </div>
+                    </div>
+                    <div style="background:#1a1a1a;border-radius:10px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;">
+                        <div>
+                            <div style="color:#f0f0f0;font-size:.88rem;font-weight:600;">Mathe Midterm</div>
+                            <div style="color:#555;font-size:.78rem;margin-top:2px;">Mo, 27. April 2026</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="color:#d4a843;font-size:1.4rem;font-weight:700;line-height:1;">42</div>
+                            <div style="color:#555;font-size:.72rem;">Tage</div>
+                        </div>
+                    </div>
+                    <div style="background:#1a1a1a;border-radius:10px;padding:14px 18px;display:flex;align-items:center;justify-content:space-between;">
+                        <div>
+                            <div style="color:#f0f0f0;font-size:.88rem;font-weight:600;">Recht Klausur</div>
+                            <div style="color:#555;font-size:.78rem;margin-top:2px;">Fr, 15. Mai 2026</div>
+                        </div>
+                        <div style="text-align:right;">
+                            <div style="color:#00b87a;font-size:1.4rem;font-weight:700;line-height:1;">60</div>
+                            <div style="color:#555;font-size:.72rem;">Tage</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Cloud Sync -->
+        <div class="feature-block reverse lp-animate">
+            <div class="feature-text">
+                <span class="feature-tag" data-i18n="f.b6.tag">Cloud Sync</span>
+                <h3 style="margin-top:12px;" data-i18n="f.b6.title">Deine Daten. Überall.</h3>
+                <p data-i18n="f.b6.p1">Alle Änderungen werden automatisch in der Cloud gespeichert (Firebase von Google). Öffne Studytracker auf dem Laptop in der Bibliothek und auf dem Handy zu Hause — dein Fortschritt ist immer aktuell.</p>
+                <p data-i18n="f.b6.p2">Eine Statusanzeige im Header zeigt dir, ob gerade gespeichert wird oder ob alles synchron ist. Auch offline funktioniert die App — Änderungen werden synchronisiert, sobald du wieder online bist.</p>
+            </div>
+            <div class="feature-visual" style="flex-direction:column;gap:16px;">
+                <span style="font-size:3rem;">☁️</span>
+                <div style="display:flex;flex-direction:column;gap:10px;width:100%;">
+                    <div style="background:#1a1a1a;border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:1.2rem;">💻</span>
+                        <span style="font-size:.82rem;color:#aaa;">Laptop – Bibliothek</span>
+                        <span style="margin-left:auto;font-size:.72rem;color:#00b87a;font-weight:700;">● Sync</span>
+                    </div>
+                    <div style="background:#1a1a1a;border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:1.2rem;">📱</span>
+                        <span style="font-size:.82rem;color:#aaa;">iPhone – im Bus</span>
+                        <span style="margin-left:auto;font-size:.72rem;color:#00b87a;font-weight:700;">● Sync</span>
+                    </div>
+                    <div style="background:#1a1a1a;border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:12px;">
+                        <span style="font-size:1.2rem;">🖥</span>
+                        <span style="font-size:.82rem;color:#aaa;">Desktop – zu Hause</span>
+                        <span style="margin-left:auto;font-size:.72rem;color:#00b87a;font-weight:700;">● Sync</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- Setup section -->
+<section class="section setup-section" id="how-it-works">
+    <div class="section-inner">
+        <p class="section-label" data-i18n="f.setup.label">Einrichtung</p>
+        <h2 class="section-title" data-i18n="f.setup.title">In 3 Schritten startklar.</h2>
+        <p class="section-sub" data-i18n="f.setup.sub">Keine Installation, kein Abo. Einfach anmelden und loslegen.</p>
+        <div class="setup-steps">
+            <div class="setup-step lp-animate">
+                <div class="setup-step-num">1</div>
+                <h4 data-i18n="f.step1.title">Mit Google anmelden</h4>
+                <p data-i18n="f.step1.desc">Klicke auf "Mit Google anmelden" auf der Startseite. Du benötigst nur ein Google-Konto — das wars. Keine E-Mail, kein Passwort, keine Bestätigungs-Mail.</p>
+            </div>
+            <div class="setup-step lp-animate">
+                <div class="setup-step-num">2</div>
+                <h4 data-i18n="f.step2.title">Fächer & Themen anlegen</h4>
+                <p data-i18n="f.step2.desc">Lege deine Fächer an (z.B. VWL, Mathe, Recht) und füge pro Fach die Themen deines Semesters hinzu. Du kannst jederzeit Themen hinzufügen oder umbenennen — mit Klick auf das ✏-Symbol.</p>
+            </div>
+            <div class="setup-step lp-animate">
+                <div class="setup-step-num">3</div>
+                <h4 data-i18n="f.step3.title">Lernkategorien festlegen</h4>
+                <p data-i18n="f.step3.desc">Wähle, welche Lernkategorien du tracken möchtest (z.B. Vorlesung, Übung, Zusammenfassung, Altklausur). Diese werden als Spalten in der Tabelle angezeigt.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <h2 data-i18n="f.cta.title">Bereit loszulegen?</h2>
+    <p data-i18n="f.cta.desc">Kostenlos. Keine Installation. Einfach anmelden und loslegen.</p>
+    <a href="index.html" class="hero-btn">
+        <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.717v2.258h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.258c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 0 0 9 18z" fill="#34A853"/><path d="M3.964 10.707A5.41 5.41 0 0 1 3.682 9c0-.593.102-1.17.282-1.707V4.961H.957A8.996 8.996 0 0 0 0 9c0 1.452.348 2.827.957 4.039l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 0 0 .957 4.961L3.964 6.293C4.672 4.166 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+        <span data-i18n="f.cta.btn">Mit Google anmelden</span>
+    </a>
+</section>
+
+<footer style="background:#0a0a0a;border-top:1px solid #1e1e1e;padding:40px 32px;">
+    <div style="max-width:1080px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;">
+        <span style="font-size:.78rem;color:#444;" data-i18n="f.footer">© 2026 Studytracker</span>
+        <nav style="display:flex;align-items:center;gap:24px;flex-wrap:wrap;">
+            <a href="index.html" style="font-size:.78rem;color:#555;text-decoration:none;">Home</a>
+            <a href="features.html" style="font-size:.78rem;color:#555;text-decoration:none;">Features</a>
+            <a href="about.html" style="font-size:.78rem;color:#555;text-decoration:none;">About</a>
+            <a href="impressum.html" style="font-size:.78rem;color:#555;text-decoration:none;">Impressum</a>
+        </nav>
+    </div>
+</footer>
+
+<script src="i18n.js"></script>
+<script>
+    // Scroll animations
+    var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) { if (e.isIntersecting) e.target.classList.add('lp-visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.lp-animate').forEach(function(el) { observer.observe(el); });
+
+    // Sticky nav shadow on scroll
+    window.addEventListener('scroll', function() {
+        document.querySelector('.lp-nav').classList.toggle('lp-nav--scrolled', window.scrollY > 10);
+    });
+
+    var hamburger = document.getElementById('lp-hamburger');
+    if (hamburger) {
+        hamburger.onclick = function() {
+            hamburger.classList.toggle('open');
+            document.getElementById('lp-nav').classList.toggle('nav-open');
+        };
+        document.querySelectorAll('.lp-nav-link, .lp-nav-btn').forEach(function(el) {
+            el.addEventListener('click', function() {
+                hamburger.classList.remove('open');
+                document.getElementById('lp-nav').classList.remove('nav-open');
+            });
+        });
+    }
+
+</script>
+</body>
+</html>
