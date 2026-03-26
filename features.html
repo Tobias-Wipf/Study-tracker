@@ -48,11 +48,13 @@
         .visual-icon { font-size: 4rem; margin-bottom: 16px; display: block; text-align: center; }
 
         /* Mini mockups inside feature visuals */
-        .mini-table { width: 100%; border-collapse: collapse; font-size: .82rem; background: #111; table-layout: fixed; }
-        .mini-table th { color: #888; font-weight: 600; text-transform: uppercase; font-size: .72rem; letter-spacing: .06em; padding: 8px 10px; border-bottom: 1px solid #2d2d2d; text-align: center; background: #161616; }
-        .mini-table th:first-child { text-align: left; }
-        .mini-table td { padding: 10px; border-bottom: 1px solid #1e1e1e; color: #ccc; background: #111; text-align: center; }
-        .mini-table td:first-child { text-align: left; }
+        .mini-grid { width: 100%; font-size: .82rem; background: #111; }
+        .mg-row { display: flex; align-items: center; border-bottom: 1px solid #1e1e1e; }
+        .mg-row:last-child { border-bottom: none; }
+        .mg-row.mg-header { background: #161616; border-bottom: 1px solid #2d2d2d; }
+        .mg-row.mg-header .mg-topic, .mg-row.mg-header .mg-cell { color: #888; font-weight: 600; text-transform: uppercase; font-size: .72rem; letter-spacing: .06em; }
+        .mg-topic { flex: 1; padding: 10px; color: #ccc; min-width: 0; }
+        .mg-cell { width: 52px; flex-shrink: 0; text-align: center; padding: 10px 4px; color: #ccc; }
         .mini-table tr:last-child td { border-bottom: none; }
         .status-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .72rem; font-weight: 700; }
         .pill-done { background: rgba(0,184,122,.15); color: #00b87a; }
@@ -117,8 +119,7 @@
             .feature-block.reverse .feature-visual { order: 0; }
             .setup-steps { grid-template-columns: 1fr; }
             .feature-visual { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-            .mini-table { font-size: .75rem; }
-            .mini-table th, .mini-table td { padding: 8px 6px; }
+            .mini-grid { font-size: .75rem; }
         }
     </style>
 </head>
@@ -268,23 +269,23 @@
                 <p data-i18n-html="f.b1.p2">Vier Status-Stufen: <strong style="color:#555">Nicht begonnen</strong> &rarr; <strong style="color:#d4a843">In Arbeit</strong> &rarr; <strong style="color:#a78bfa">Wiederholen</strong> &rarr; <strong style="color:#00b87a">Fertig</strong>. Per Klick wechseln, kein Aufwand.</p>
             </div>
             <div class="feature-visual">
-                <table class="mini-table">
-                    <colgroup><col><col style="width:50px"><col style="width:60px"><col style="width:50px"></colgroup>
-                    <thead>
-                        <tr>
-                            <th>Thema</th>
-                            <th>VL</th>
-                            <th>&Uuml;bung</th>
-                            <th>AK</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr><td>Angebot &amp; Nachfrage</td><td><span class="status-pill pill-done">&#10004;</span></td><td><span class="status-pill pill-done">&#10004;</span></td><td><span class="status-pill pill-done">&#10004;</span></td></tr>
-                        <tr><td>Elastizit&auml;t</td><td><span class="status-pill pill-done">&#10004;</span></td><td><span class="status-pill pill-prog">&#128260;</span></td><td><span class="status-pill pill-none">&mdash;</span></td></tr>
-                        <tr><td>Marktversagen</td><td><span class="status-pill pill-prog">&#128260;</span></td><td><span class="status-pill pill-none">&mdash;</span></td><td><span class="status-pill pill-none">&mdash;</span></td></tr>
-                        <tr><td>Spieltheorie</td><td><span class="status-pill pill-rev">&#8634;</span></td><td><span class="status-pill pill-rev">&#8634;</span></td><td><span class="status-pill pill-none">&mdash;</span></td></tr>
-                    </tbody>
-                </table>
+                <div class="mini-grid">
+                    <div class="mg-row mg-header">
+                        <span class="mg-topic">Thema</span><span class="mg-cell">VL</span><span class="mg-cell">&Uuml;bung</span><span class="mg-cell">AK</span>
+                    </div>
+                    <div class="mg-row">
+                        <span class="mg-topic">Angebot &amp; Nachfrage</span><span class="mg-cell"><span class="status-pill pill-done">&#10004;</span></span><span class="mg-cell"><span class="status-pill pill-done">&#10004;</span></span><span class="mg-cell"><span class="status-pill pill-done">&#10004;</span></span>
+                    </div>
+                    <div class="mg-row">
+                        <span class="mg-topic">Elastizit&auml;t</span><span class="mg-cell"><span class="status-pill pill-done">&#10004;</span></span><span class="mg-cell"><span class="status-pill pill-prog">&#128260;</span></span><span class="mg-cell"><span class="status-pill pill-none">&mdash;</span></span>
+                    </div>
+                    <div class="mg-row">
+                        <span class="mg-topic">Marktversagen</span><span class="mg-cell"><span class="status-pill pill-prog">&#128260;</span></span><span class="mg-cell"><span class="status-pill pill-none">&mdash;</span></span><span class="mg-cell"><span class="status-pill pill-none">&mdash;</span></span>
+                    </div>
+                    <div class="mg-row">
+                        <span class="mg-topic">Spieltheorie</span><span class="mg-cell"><span class="status-pill pill-rev">&#8634;</span></span><span class="mg-cell"><span class="status-pill pill-rev">&#8634;</span></span><span class="mg-cell"><span class="status-pill pill-none">&mdash;</span></span>
+                    </div>
+                </div>
             </div>
         </div>
 
