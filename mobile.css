@@ -750,7 +750,7 @@ body.dark .m-dropdown-sheet {
 .m-install-arrow {
     position: fixed;
     bottom: calc(16px + env(safe-area-inset-bottom));
-    right: 24px;
+    right: 44px;
     left: auto;
     transform: none;
     animation: mBounceDown 1.5s ease-in-out infinite;

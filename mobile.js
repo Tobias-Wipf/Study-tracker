@@ -55,9 +55,12 @@ function showIOSInstallGuide() {
     if (tabBar) tabBar.style.display = "none";
     if (!view) return;
 
-    // Force dark background
+    // Force dark background everywhere
+    document.documentElement.style.background = '#0f0f0f';
     document.body.style.background = '#0f0f0f';
     view.style.background = '#0f0f0f';
+    var mobileApp = document.getElementById('mobile-app');
+    if (mobileApp) mobileApp.style.background = '#0f0f0f';
 
     var t = iosInstallStrings[iosInstallLang];
 
