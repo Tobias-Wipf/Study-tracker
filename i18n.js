@@ -54,7 +54,7 @@
       'i.faq.q7': 'Was sind Vorlagen und wie funktionieren sie?',
       'i.faq.a7': 'Vorlagen sind fertige Fächer-Strukturen mit Themen, Kategorien und Prüfungsterminen, die du von anderen Studierenden übernehmen kannst. Du kannst auch eigene Vorlagen teilen, damit deine Kommilitonen nicht alles nochmal anlegen müssen. Zusätzlich kannst du Vorlagen aus Excel-Dateien oder sogar Bildern (per OCR) importieren.',
       'i.faq.q8': 'Wie installiere ich Studytracker auf dem iPhone?',
-      'i.faq.a8': 'Öffne study-tracker.org in Safari, tippe auf das Teilen-Symbol (Quadrat mit Pfeil nach oben), scrolle nach unten und wähle \u201eZum Home-Bildschirm\u201c. Tippe auf \u201eHinzufügen\u201c — fertig! Die App erscheint als Icon auf deinem Home-Bildschirm und läuft im Vollbild wie eine native App.',
+      'i.faq.a8': 'Öffne study-tracker.org in Safari, tippe auf das Teilen-Symbol (Quadrat mit Pfeil nach oben), scrolle nach unten und wähle \u201eZum Home-Bildschirm\u201c. Tippe auf \u201eHinzufügen\u201c — fertig! Studytracker ist eine PWA (Progressive Web App): Die App erscheint als eigenes Icon auf deinem Home-Bildschirm, läuft im Vollbild wie eine native App, funktioniert offline und synchronisiert automatisch, sobald du wieder online bist.',
       // INDEX – CTA & footer
       'i.cta.title': 'Bereit anzufangen?',
       'i.cta.desc': 'Kostenlos. Open Source. Einfach anmelden und loslegen.',
@@ -171,7 +171,7 @@
       'i.faq.q5': 'Can I customise my subjects?', 'i.faq.a5': 'Yes. You can freely add, rename and delete subjects, topics and categories — fully tailored to your studies.',
       'i.faq.q6': 'Is there a to-do feature?', 'i.faq.a6': 'Yes. You can create tasks with priority, due date and subject assignment. Open and completed tasks are clearly displayed.',
       'i.faq.q7': 'What are templates and how do they work?', 'i.faq.a7': 'Templates are ready-made subject structures with topics, categories and exam dates that you can import from other students. You can also share your own templates so your classmates don\'t have to set everything up again. You can even import templates from Excel files or images (via OCR).',
-      'i.faq.q8': 'How do I install Studytracker on iPhone?', 'i.faq.a8': 'Open study-tracker.org in Safari, tap the Share icon (square with upward arrow), scroll down and choose "Add to Home Screen". Tap "Add" — done! The app appears as an icon on your home screen and runs in full-screen like a native app.',
+      'i.faq.q8': 'How do I install Studytracker on iPhone?', 'i.faq.a8': 'Open study-tracker.org in Safari, tap the Share icon (square with upward arrow), scroll down and choose "Add to Home Screen". Tap "Add" — done! Studytracker is a PWA (Progressive Web App): it appears as its own icon on your home screen, runs in full-screen like a native app, works offline, and syncs automatically when you\'re back online.',
       // INDEX – CTA & footer
       'i.cta.title': 'Ready to get started?', 'i.cta.desc': 'Free. Open source. Just sign in and go.',
       'i.cta.btn': 'Sign in with Google', 'i.cta.demo': 'Or try it first',
