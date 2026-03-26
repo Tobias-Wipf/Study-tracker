@@ -49,8 +49,10 @@
 
         /* Mini mockups inside feature visuals */
         .mini-table { width: 100%; border-collapse: collapse; font-size: .82rem; background: #111; }
-        .mini-table th { color: #888; font-weight: 600; text-transform: uppercase; font-size: .72rem; letter-spacing: .06em; padding: 8px 10px; border-bottom: 1px solid #2d2d2d; text-align: left; background: #161616; }
-        .mini-table td { padding: 10px; border-bottom: 1px solid #1e1e1e; color: #ccc; background: #111; }
+        .mini-table th { color: #888; font-weight: 600; text-transform: uppercase; font-size: .72rem; letter-spacing: .06em; padding: 8px 10px; border-bottom: 1px solid #2d2d2d; text-align: center; background: #161616; }
+        .mini-table th:first-child { text-align: left; }
+        .mini-table td { padding: 10px; border-bottom: 1px solid #1e1e1e; color: #ccc; background: #111; text-align: center; }
+        .mini-table td:first-child { text-align: left; }
         .mini-table tr:last-child td { border-bottom: none; }
         .status-pill { display: inline-block; padding: 3px 10px; border-radius: 999px; font-size: .72rem; font-weight: 700; }
         .pill-done { background: rgba(0,184,122,.15); color: #00b87a; }
@@ -272,7 +274,7 @@
                             <th>Thema</th>
                             <th>VL</th>
                             <th>&Uuml;bung</th>
-                            <th>ZF</th>
+                            <th>Altklausuren</th>
                         </tr>
                     </thead>
                     <tbody>
