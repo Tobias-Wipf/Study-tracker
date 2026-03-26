@@ -453,6 +453,10 @@ function startDemoMode() {
     // Sample goals
     localStorage.setItem("lf_dailygoal", JSON.stringify({target:5}));
     localStorage.setItem("lf_weeklygoal", JSON.stringify({target:10}));
+    // Force dark mode for demo
+    document.body.classList.add("dark");
+    localStorage.setItem("lf_darkmode", "true");
+    updateDarkIcon();
     // Show app
     var landing = document.getElementById("landing");
     var appWrapper = document.getElementById("app-wrapper");
