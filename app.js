@@ -61,7 +61,7 @@ var APP_T = {
         'overview': '\u00dcbersicht',
         'progress': 'Fortschritt',
         'progress.over.time': 'Fortschritt \u00fcber Zeit',
-        'total.progress': 'GESAMT FORTSCHRITT',
+        'total.progress': 'GESAMTFORTSCHRITT',
         'total': 'Gesamt',
         'open': 'Offen',
         'stats.title': 'THEMEN-STATUS',
