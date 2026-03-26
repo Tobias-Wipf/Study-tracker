@@ -36,18 +36,7 @@
     <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js" integrity="sha384-GJqSu7vueQ9qN0E9yLPb3Wtpd7OrgK8KmYzC8T1IysG1bcvxvIO4qtYR/D3A991F" crossorigin="anonymous"></script>
 </head>
 <body>
-<script>
-// Early iOS Safari detection — add class before first paint so Safari uses dark bg for bottom bar
-(function(){
-    var ua = navigator.userAgent;
-    var ios = /iP(hone|ad|od)/.test(ua);
-    var standalone = navigator.standalone;
-    if (ios && !standalone && window.innerWidth <= 640) {
-        document.documentElement.classList.add('ios-install');
-        document.body.classList.add('ios-install');
-    }
-})();
-</script>
+
 
 <!-- ===================== LANDING PAGE ===================== -->
 <div id="landing" style="display:none">
