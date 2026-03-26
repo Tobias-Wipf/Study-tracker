@@ -55,15 +55,9 @@ function showIOSInstallGuide() {
     if (tabBar) tabBar.style.display = "none";
     if (!view) return;
 
-    // Force dark background everywhere (prevent white bar on iOS)
-    document.documentElement.style.cssText = 'background:#0f0f0f !important;height:100%';
-    document.body.style.cssText += ';background:#0f0f0f !important;overflow:hidden;height:100%';
-    view.style.cssText = 'flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0;background:#0f0f0f';
-    var mobileApp = document.getElementById('mobile-app');
-    if (mobileApp) mobileApp.style.cssText = 'display:flex;flex-direction:column;height:100vh;height:100dvh;background:#0f0f0f;position:fixed;top:0;left:0;right:0;bottom:0;z-index:9999';
-    // Hide any other elements that might bleed through
-    var els = document.querySelectorAll('main.content, .hsg-footer, .hsg-header, .hsg-nav, #landing, #app');
-    for (var i = 0; i < els.length; i++) els[i].style.display = 'none';
+    // Add class for CSS-based dark override (Safari reads body bg from CSS for bottom bar)
+    document.documentElement.classList.add('ios-install');
+    document.body.classList.add('ios-install');
     // Update theme-color meta tag
     var themeMeta = document.querySelector('meta[name="theme-color"]');
     if (themeMeta) themeMeta.content = '#0f0f0f';

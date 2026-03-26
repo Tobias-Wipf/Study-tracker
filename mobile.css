@@ -653,6 +653,37 @@ body.dark .m-dropdown-sheet {
     font-weight: 700;
 }
 
+/* ---- iOS Install Guide: force dark everywhere via CSS ---- */
+html.ios-install,
+html.ios-install body {
+    background: #0f0f0f !important;
+    overflow: hidden !important;
+    height: 100% !important;
+}
+html.ios-install #mobile-app {
+    display: flex !important;
+    flex-direction: column;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 9999;
+    background: #0f0f0f !important;
+}
+html.ios-install #mobile-view {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 !important;
+    background: #0f0f0f !important;
+}
+html.ios-install main.content,
+html.ios-install .hsg-footer,
+html.ios-install .hsg-header,
+html.ios-install .hsg-nav,
+html.ios-install #landing,
+html.ios-install #app {
+    display: none !important;
+}
+
 /* ---- iOS Install Guide (always dark) ---- */
 .m-install-guide {
     display: flex;
@@ -669,17 +700,6 @@ body.dark .m-dropdown-sheet {
     --hsg-bg: #0f0f0f;
     --hsg-border: #2d2d2d;
     --hsg-green: #00b87a;
-}
-.m-install-guide::after {
-    content: '';
-    position: fixed;
-    bottom: -100px;
-    left: 0;
-    right: 0;
-    height: 200px;
-    background: #0f0f0f;
-    z-index: 9999;
-    pointer-events: none;
 }
 .m-install-icon {
     margin-bottom: 16px;
