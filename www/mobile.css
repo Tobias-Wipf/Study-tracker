@@ -660,7 +660,7 @@ body.dark .m-dropdown-sheet {
     align-items: center;
     justify-content: center;
     min-height: 100%;
-    padding: 40px 24px 120px;
+    padding: 40px 24px calc(120px + env(safe-area-inset-bottom));
     text-align: center;
     position: relative;
     background: #0f0f0f;
@@ -669,6 +669,16 @@ body.dark .m-dropdown-sheet {
     --hsg-bg: #0f0f0f;
     --hsg-border: #2d2d2d;
     --hsg-green: #00b87a;
+}
+.m-install-guide::after {
+    content: '';
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: env(safe-area-inset-bottom, 0px);
+    background: #0f0f0f;
+    z-index: 9999;
 }
 .m-install-icon {
     margin-bottom: 16px;
