@@ -673,12 +673,13 @@ body.dark .m-dropdown-sheet {
 .m-install-guide::after {
     content: '';
     position: fixed;
-    bottom: 0;
+    bottom: -100px;
     left: 0;
     right: 0;
-    height: env(safe-area-inset-bottom, 0px);
+    height: 200px;
     background: #0f0f0f;
     z-index: 9999;
+    pointer-events: none;
 }
 .m-install-icon {
     margin-bottom: 16px;
