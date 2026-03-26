@@ -113,7 +113,7 @@
       'a.story.p3': 'Kein Abo, kein Framework, kein Overhead. Einfach \u00f6ffnen und loslegen \u2014 auf dem Laptop in der Bib oder auf dem Handy unterwegs.',
       // ABOUT PAGE – Values
       'a.val.label': 'Prinzipien', 'a.val.title': 'Was uns antreibt.',
-      'a.v1.title': 'Einfachheit zuerst', 'a.v1.desc': 'Kein Feature, das nicht wirklich gebraucht wird. Studytracker soll in Sekunden verstanden und genutzt werden können.',
+      'a.v1.title': 'Simplizität', 'a.v1.desc': 'Kein Feature, das nicht wirklich gebraucht wird. Studytracker soll in Sekunden verstanden und genutzt werden können.',
       'a.v2.title': 'Datenschutz', 'a.v2.desc': 'Deine Lerndaten gehören dir. Sie werden sicher verschlüsselt gespeichert und niemals weitergegeben oder verkauft.',
       'a.v3.title': 'Überall verfügbar', 'a.v3.desc': 'Kein Download, kein Setup. Studytracker läuft im Browser — auf dem Laptop in der Bibliothek genauso wie auf dem Handy unterwegs.',
       'a.v4.title': 'Kostenlos', 'a.v4.desc': 'Studytracker ist und bleibt kostenlos. Kein Freemium, kein Abo, keine versteckten Kosten.',
