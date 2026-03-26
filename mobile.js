@@ -21,18 +21,56 @@ if (isStandalone) {
 }
 
 // ---- iOS PWA Install Guide ----
+var iosInstallLang = 'de';
+var iosInstallStrings = {
+    de: {
+        subtitle: 'F\u00fcr das beste Erlebnis, installiere Studytracker als App auf deinem Home-Bildschirm.',
+        s1title: 'Tippe auf die drei Punkte',
+        s1desc: 'Unten rechts in der Safari-Leiste (\u2026)',
+        s2title: 'Tippe auf das Teilen-Symbol',
+        s2desc: 'Das Symbol findest du im ge\u00f6ffneten Men\u00fc',
+        s3title: 'Scrolle und tippe \u201eZum Home-Bildschirm\u201c',
+        s3desc: 'Die Option erscheint weiter unten im Men\u00fc',
+        s4title: 'Tippe \u201eHinzuf\u00fcgen\u201c',
+        s4desc: 'Die App erscheint auf deinem Home-Bildschirm',
+        langBtn: 'EN'
+    },
+    en: {
+        subtitle: 'For the best experience, install Studytracker as an app on your home screen.',
+        s1title: 'Tap the three dots',
+        s1desc: 'Bottom right in the Safari toolbar (\u2026)',
+        s2title: 'Tap the Share icon',
+        s2desc: 'You\u2019ll find it in the opened menu',
+        s3title: 'Scroll and tap \u201cAdd to Home Screen\u201d',
+        s3desc: 'The option appears further down in the menu',
+        s4title: 'Tap \u201cAdd\u201d',
+        s4desc: 'The app will appear on your home screen',
+        langBtn: 'DE'
+    }
+};
+
 function showIOSInstallGuide() {
     var view = document.getElementById("mobile-view");
     var tabBar = document.getElementById("mobile-tab-bar");
     if (tabBar) tabBar.style.display = "none";
     if (!view) return;
 
+    // Force dark background
+    document.body.style.background = '#0f0f0f';
+    view.style.background = '#0f0f0f';
+
+    var t = iosInstallStrings[iosInstallLang];
+
     var h = '<div class="m-install-guide">';
+
+    // Language toggle
+    h += '<button class="m-install-lang-btn" id="ios-install-lang">' + t.langBtn + '</button>';
+
     h += '<div class="m-install-icon">';
     h += '<img src="icon-192.png" alt="Studytracker" style="width:80px;height:80px;border-radius:18px;">';
     h += '</div>';
     h += '<h1 class="m-install-title">Studytracker</h1>';
-    h += '<p class="m-install-subtitle">F\u00fcr das beste Erlebnis, installiere Studytracker als App auf deinem Home-Bildschirm.</p>';
+    h += '<p class="m-install-subtitle">' + t.subtitle + '</p>';
 
     h += '<div class="m-install-steps">';
 
@@ -40,8 +78,8 @@ function showIOSInstallGuide() {
     h += '<div class="m-install-step">';
     h += '<div class="m-install-step-num">1</div>';
     h += '<div class="m-install-step-content">';
-    h += '<div class="m-install-step-title">Tippe auf die drei Punkte</div>';
-    h += '<div class="m-install-step-desc">Unten rechts in der Safari-Leiste (\u2026)</div>';
+    h += '<div class="m-install-step-title">' + t.s1title + '</div>';
+    h += '<div class="m-install-step-desc">' + t.s1desc + '</div>';
     h += '<div class="m-install-step-icon">';
     h += '<svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="2"/><circle cx="12" cy="12" r="2"/><circle cx="19" cy="12" r="2"/></svg>';
     h += '</div>';
@@ -51,8 +89,8 @@ function showIOSInstallGuide() {
     h += '<div class="m-install-step">';
     h += '<div class="m-install-step-num">2</div>';
     h += '<div class="m-install-step-content">';
-    h += '<div class="m-install-step-title">Tippe auf das Teilen-Symbol</div>';
-    h += '<div class="m-install-step-desc">Das Symbol findest du im ge\u00f6ffneten Men\u00fc</div>';
+    h += '<div class="m-install-step-title">' + t.s2title + '</div>';
+    h += '<div class="m-install-step-desc">' + t.s2desc + '</div>';
     h += '<div class="m-install-step-icon">';
     h += '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>';
     h += '</div>';
@@ -62,8 +100,8 @@ function showIOSInstallGuide() {
     h += '<div class="m-install-step">';
     h += '<div class="m-install-step-num">3</div>';
     h += '<div class="m-install-step-content">';
-    h += '<div class="m-install-step-title">Scrolle und tippe \u201eZum Home-Bildschirm\u201c</div>';
-    h += '<div class="m-install-step-desc">Die Option erscheint weiter unten im Men\u00fc</div>';
+    h += '<div class="m-install-step-title">' + t.s3title + '</div>';
+    h += '<div class="m-install-step-desc">' + t.s3desc + '</div>';
     h += '<div class="m-install-step-icon">';
     h += '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>';
     h += '</div>';
@@ -73,8 +111,8 @@ function showIOSInstallGuide() {
     h += '<div class="m-install-step">';
     h += '<div class="m-install-step-num">4</div>';
     h += '<div class="m-install-step-content">';
-    h += '<div class="m-install-step-title">Tippe \u201eHinzuf\u00fcgen\u201c</div>';
-    h += '<div class="m-install-step-desc">Die App erscheint auf deinem Home-Bildschirm</div>';
+    h += '<div class="m-install-step-title">' + t.s4title + '</div>';
+    h += '<div class="m-install-step-desc">' + t.s4desc + '</div>';
     h += '<div class="m-install-step-icon">\u2705</div>';
     h += '</div></div>';
 
@@ -82,12 +120,18 @@ function showIOSInstallGuide() {
 
     // Arrow pointing down-right to three dots button
     h += '<div class="m-install-arrow">';
-    h += '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--hsg-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>';
+    h += '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00b87a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>';
     h += '</div>';
 
     h += '</div>';
 
     view.innerHTML = h;
+
+    // Language toggle handler
+    document.getElementById('ios-install-lang').onclick = function() {
+        iosInstallLang = iosInstallLang === 'de' ? 'en' : 'de';
+        showIOSInstallGuide();
+    };
 }
 
 

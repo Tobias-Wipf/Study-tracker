@@ -653,7 +653,7 @@ body.dark .m-dropdown-sheet {
     font-weight: 700;
 }
 
-/* ---- iOS Install Guide ---- */
+/* ---- iOS Install Guide (always dark) ---- */
 .m-install-guide {
     display: flex;
     flex-direction: column;
@@ -662,6 +662,13 @@ body.dark .m-dropdown-sheet {
     min-height: 100%;
     padding: 40px 24px 120px;
     text-align: center;
+    position: relative;
+    background: #0f0f0f;
+    --hsg-text: #f0f0f0;
+    --hsg-text-secondary: #9ca3af;
+    --hsg-bg: #0f0f0f;
+    --hsg-border: #2d2d2d;
+    --hsg-green: #00b87a;
 }
 .m-install-icon {
     margin-bottom: 16px;
@@ -727,10 +734,23 @@ body.dark .m-dropdown-sheet {
     color: var(--hsg-text-secondary);
     font-size: 1.5rem;
 }
+.m-install-lang-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: rgba(255,255,255,.1);
+    border: 1px solid rgba(255,255,255,.15);
+    color: #fff;
+    font-size: .82rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+}
 .m-install-arrow {
     position: fixed;
     bottom: calc(16px + env(safe-area-inset-bottom));
-    right: 32px;
+    right: 24px;
     left: auto;
     transform: none;
     animation: mBounceDown 1.5s ease-in-out infinite;
