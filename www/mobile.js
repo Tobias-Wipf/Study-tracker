@@ -55,13 +55,9 @@ function showIOSInstallGuide() {
     if (tabBar) tabBar.style.display = "none";
     if (!view) return;
 
-    // Add class for CSS-based dark override (Safari reads body bg from CSS for bottom bar)
+    // Add class for CSS-based light override (matches Safari's white bottom bar)
     document.documentElement.classList.add('ios-install');
     document.body.classList.add('ios-install');
-    // Update theme-color meta tag
-    var themeMeta = document.querySelector('meta[name="theme-color"]');
-    if (themeMeta) themeMeta.content = '#0f0f0f';
-    else { themeMeta = document.createElement('meta'); themeMeta.name = 'theme-color'; themeMeta.content = '#0f0f0f'; document.head.appendChild(themeMeta); }
 
     var t = iosInstallStrings[iosInstallLang];
 
@@ -124,7 +120,7 @@ function showIOSInstallGuide() {
 
     // Arrow pointing down-right to three dots button
     h += '<div class="m-install-arrow">';
-    h += '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00b87a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>';
+    h += '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#00875a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>';
     h += '</div>';
 
     h += '</div>';
@@ -145,7 +141,8 @@ var M_ICONS = {
     subjects: '<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
     todo: '<svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>',
     settings: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>',
-    back: '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>'
+    back: '<svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>',
+    close: '<svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>'
 };
 
 // ---- Tab Bar ----
@@ -406,6 +403,7 @@ function renderMobileSubjectDetail(view, subjectId) {
         h += '<div class="m-topic-header">';
         h += '<div class="m-topic-name">' + esc(topic) + '</div>';
         h += '<div class="m-topic-pct">' + Math.round(topicPct * 100) + '%</div>';
+        h += '<button class="m-topic-delete" data-sid="' + subj.id + '" data-ti="' + ti + '">' + M_ICONS.close + '</button>';
         h += '</div>';
         h += '<div class="m-topic-chips">';
         subj.categories.forEach(function(cat, ci) {
@@ -418,6 +416,24 @@ function renderMobileSubjectDetail(view, subjectId) {
         });
         h += '</div></div>';
     });
+
+    // Add topic button
+    h += '<button class="m-add-topic-btn" id="m-add-topic" data-sid="' + subj.id + '">' + t('add.topic') + '</button>';
+
+    // Categories section
+    h += '<div class="m-section-label">' + t('categories') + '</div>';
+    h += '<div class="m-categories-list">';
+    subj.categories.forEach(function(cat, ci) {
+        h += '<div class="m-category-tag">';
+        h += '<span class="m-category-tag-name">' + esc(cat) + '</span>';
+        h += '<button class="m-category-delete" data-sid="' + subj.id + '" data-ci="' + ci + '">' + M_ICONS.close + '</button>';
+        h += '</div>';
+    });
+    h += '</div>';
+    h += '<button class="m-add-topic-btn" id="m-add-category" data-sid="' + subj.id + '">' + t('add.category') + '</button>';
+
+    // Delete subject
+    h += '<button class="m-delete-subject-btn" id="m-delete-subject" data-sid="' + subj.id + '">' + t('delete.subject') + '</button>';
 
     h += '</div></div>'; // close body + detail
 
@@ -446,6 +462,148 @@ function renderMobileSubjectDetail(view, subjectId) {
             showMobileStatusDropdown(chip, subjectId, view);
         };
     });
+
+    // Add topic button
+    var addTopicBtn = document.getElementById("m-add-topic");
+    if (addTopicBtn) {
+        addTopicBtn.onclick = function() {
+            modalPrompt(t('add.topic'), "", "", function(v) {
+                if (!v) return;
+                var ss = loadSubjects(), s = ss.find(function(x) { return x.id === subjectId; });
+                if (s) { s.topics.push(v); saveSubjects(ss); renderMobileSubjectDetail(view, subjectId); }
+            });
+        };
+    }
+
+    // Delete topic buttons
+    view.querySelectorAll(".m-topic-delete").forEach(function(btn) {
+        btn.onclick = function(e) {
+            e.stopPropagation();
+            var sid = btn.dataset.sid, ti = Number(btn.dataset.ti);
+            var ss = loadSubjects(), s = ss.find(function(x) { return x.id === sid; });
+            if (!s) return;
+            var topicName = s.topics[ti];
+            modalConfirm(t('delete.subject').replace(/Fach|subject/i, 'Thema'), '"' + topicName + '"?', function() {
+                var backup = { subj: sid, ti: ti, name: topicName, statuses: {}, note: null };
+                var st = loadStatuses(), ns = {}, pf = sid + ".";
+                Object.keys(st).forEach(function(k) {
+                    if (!k.startsWith(pf)) { ns[k] = st[k]; return; }
+                    var r = k.slice(pf.length), d = r.indexOf("."), tidx = Number(r.slice(0, d)), cat = r.slice(d + 1);
+                    if (tidx === ti) { backup.statuses[cat] = st[k]; return; }
+                    if (tidx > ti) tidx--;
+                    ns[pf + tidx + "." + cat] = st[k];
+                });
+                saveStatuses(ns);
+                var an = loadNotes(), nn = {}, np = pf;
+                Object.keys(an).forEach(function(k) {
+                    if (!k.startsWith(np)) { nn[k] = an[k]; return; }
+                    var ni = Number(k.slice(np.length));
+                    if (ni === ti) { backup.note = an[k]; return; }
+                    if (ni > ti) ni--;
+                    nn[np + ni] = an[k];
+                });
+                saveNotes(nn);
+                s.topics.splice(ti, 1);
+                saveSubjects(ss);
+                renderMobileSubjectDetail(view, subjectId);
+                showToast(topicName + " gelöscht", function() {
+                    var ss2 = loadSubjects(), s2 = ss2.find(function(x) { return x.id === backup.subj; });
+                    var st2 = loadStatuses(), ns2 = {};
+                    Object.keys(st2).forEach(function(k) {
+                        if (!k.startsWith(pf)) { ns2[k] = st2[k]; return; }
+                        var r = k.slice(pf.length), d = r.indexOf("."), tidx = Number(r.slice(0, d)), cat = r.slice(d + 1);
+                        if (tidx >= backup.ti) tidx++;
+                        ns2[pf + tidx + "." + cat] = st2[k];
+                    });
+                    Object.keys(backup.statuses).forEach(function(cat) { ns2[pf + backup.ti + "." + cat] = backup.statuses[cat]; });
+                    saveStatuses(ns2);
+                    var an2 = loadNotes(), nn2 = {};
+                    Object.keys(an2).forEach(function(k) {
+                        if (!k.startsWith(np)) { nn2[k] = an2[k]; return; }
+                        var ni = Number(k.slice(np.length));
+                        if (ni >= backup.ti) ni++;
+                        nn2[np + ni] = an2[k];
+                    });
+                    if (backup.note) nn2[np + backup.ti] = backup.note;
+                    saveNotes(nn2);
+                    s2.topics.splice(backup.ti, 0, backup.name);
+                    saveSubjects(ss2);
+                    renderMobileSubjectDetail(view, subjectId);
+                });
+            });
+        };
+    });
+
+    // Add category button
+    var addCatBtn = document.getElementById("m-add-category");
+    if (addCatBtn) {
+        addCatBtn.onclick = function() {
+            modalPrompt(t('add.category'), "", "", function(v) {
+                if (!v) return;
+                var ss = loadSubjects(), s = ss.find(function(x) { return x.id === subjectId; });
+                if (s) { s.categories.push(v); saveSubjects(ss); renderMobileSubjectDetail(view, subjectId); }
+            });
+        };
+    }
+
+    // Delete category buttons
+    view.querySelectorAll(".m-category-delete").forEach(function(btn) {
+        btn.onclick = function(e) {
+            e.stopPropagation();
+            var sid = btn.dataset.sid, ci = Number(btn.dataset.ci);
+            var ss = loadSubjects(), s = ss.find(function(x) { return x.id === sid; });
+            if (!s) return;
+            var catName = s.categories[ci];
+            modalConfirm(t('delete.subject').replace(/Fach|subject/i, 'Kategorie'), '"' + catName + '"?', function() {
+                var st = loadStatuses(), ns = {};
+                Object.keys(st).forEach(function(k) {
+                    if (k.startsWith(sid + ".") && k.endsWith("." + catName)) return;
+                    ns[k] = st[k];
+                });
+                saveStatuses(ns);
+                s.categories.splice(ci, 1);
+                saveSubjects(ss);
+                renderMobileSubjectDetail(view, subjectId);
+            });
+        };
+    });
+
+    // Delete subject button
+    var delSubjBtn = document.getElementById("m-delete-subject");
+    if (delSubjBtn) {
+        delSubjBtn.onclick = function() {
+            var ss = loadSubjects();
+            var idx = ss.findIndex(function(x) { return x.id === subjectId; });
+            var subj = ss[idx];
+            if (!subj) return;
+            modalConfirm(t('delete.subject'), '"' + subj.name + '"?', function() {
+                var backup = { subj: JSON.parse(JSON.stringify(subj)), idx: idx, statuses: {}, notes: {} };
+                var st = loadStatuses(), cl = {}, pf = subj.id + ".";
+                Object.keys(st).forEach(function(k) { if (k.startsWith(pf)) { backup.statuses[k] = st[k]; } else { cl[k] = st[k]; } });
+                saveStatuses(cl);
+                var no = loadNotes(), cn = {};
+                Object.keys(no).forEach(function(k) { if (k.startsWith(pf)) { backup.notes[k] = no[k]; } else { cn[k] = no[k]; } });
+                saveNotes(cn);
+                ss.splice(idx, 1);
+                saveSubjects(ss);
+                mobileSubjectView = null;
+                renderMobileAll();
+                showToast(subj.name + " gelöscht", function() {
+                    var ss2 = loadSubjects();
+                    ss2.splice(backup.idx, 0, backup.subj);
+                    saveSubjects(ss2);
+                    var s2 = loadStatuses();
+                    Object.keys(backup.statuses).forEach(function(k) { s2[k] = backup.statuses[k]; });
+                    saveStatuses(s2);
+                    var n2 = loadNotes();
+                    Object.keys(backup.notes).forEach(function(k) { n2[k] = backup.notes[k]; });
+                    saveNotes(n2);
+                    mobileSubjectView = backup.subj.id;
+                    renderMobileAll();
+                });
+            });
+        };
+    }
 
     // Swipe-back from left edge
     var touchStartX = 0, touchStartY = 0;

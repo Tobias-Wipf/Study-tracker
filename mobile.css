@@ -363,6 +363,133 @@ body.dark .m-topic {
     gap: 5px;
     flex-wrap: wrap;
 }
+.m-add-topic-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 14px;
+    margin-top: 16px;
+    border: 1.5px dashed var(--hsg-border);
+    border-radius: 14px;
+    background: transparent;
+    color: var(--hsg-green);
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.m-add-topic-btn:active {
+    background: rgba(52,199,89,.08);
+}
+body.dark .m-add-topic-btn {
+    border-color: #3a3a3c;
+}
+/* ---- Topic delete button ---- */
+.m-topic-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    margin-left: 6px;
+    flex-shrink: 0;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--hsg-text-secondary);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0;
+}
+.m-topic-delete svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+.m-topic-delete:active {
+    background: rgba(255,59,48,.12);
+    color: #ff3b30;
+}
+/* ---- Categories section ---- */
+.m-section-label {
+    font-size: .75rem;
+    font-weight: 700;
+    color: var(--hsg-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    margin: 24px 0 10px 2px;
+}
+.m-categories-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.m-category-tag {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 7px 10px;
+    background: var(--hsg-white);
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0,0,0,.06);
+}
+body.dark .m-category-tag {
+    background: #1a1a1a;
+    box-shadow: 0 1px 3px rgba(0,0,0,.3);
+}
+.m-category-tag-name {
+    font-size: .82rem;
+    font-weight: 600;
+    color: var(--hsg-text);
+}
+.m-category-delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--hsg-text-secondary);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0;
+}
+.m-category-delete svg {
+    width: 12px;
+    height: 12px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+}
+.m-category-delete:active {
+    background: rgba(255,59,48,.12);
+    color: #ff3b30;
+}
+/* ---- Delete subject button ---- */
+.m-delete-subject-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 14px;
+    margin-top: 32px;
+    border: none;
+    border-radius: 14px;
+    background: transparent;
+    color: #ff3b30;
+    font-size: .9rem;
+    font-weight: 600;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.m-delete-subject-btn:active {
+    background: rgba(255,59,48,.1);
+}
 .m-status-chip {
     display: flex;
     align-items: center;
@@ -653,10 +780,10 @@ body.dark .m-dropdown-sheet {
     font-weight: 700;
 }
 
-/* ---- iOS Install Guide: force dark everywhere via CSS ---- */
+/* ---- iOS Install Guide: force light everywhere ---- */
 html.ios-install,
 html.ios-install body {
-    background: #0f0f0f !important;
+    background: #f4f4f5 !important;
     overflow: hidden !important;
     height: 100% !important;
 }
@@ -666,14 +793,14 @@ html.ios-install #mobile-app {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     z-index: 9999;
-    background: #0f0f0f !important;
+    background: #f4f4f5 !important;
 }
 html.ios-install #mobile-view {
     flex: 1;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
     padding: 0 !important;
-    background: #0f0f0f !important;
+    background: #f4f4f5 !important;
 }
 html.ios-install main.content,
 html.ios-install .hsg-footer,
@@ -684,7 +811,7 @@ html.ios-install #app {
     display: none !important;
 }
 
-/* ---- iOS Install Guide (always dark) ---- */
+/* ---- iOS Install Guide (light to match Safari bar) ---- */
 .m-install-guide {
     display: flex;
     flex-direction: column;
@@ -694,12 +821,12 @@ html.ios-install #app {
     padding: 40px 24px calc(120px + env(safe-area-inset-bottom));
     text-align: center;
     position: relative;
-    background: #0f0f0f;
-    --hsg-text: #f0f0f0;
-    --hsg-text-secondary: #9ca3af;
-    --hsg-bg: #0f0f0f;
-    --hsg-border: #2d2d2d;
-    --hsg-green: #00b87a;
+    background: #f4f4f5;
+    --hsg-text: #111111;
+    --hsg-text-secondary: #6b7280;
+    --hsg-bg: #f4f4f5;
+    --hsg-border: #e5e7eb;
+    --hsg-green: #00875a;
 }
 .m-install-icon {
     margin-bottom: 16px;
@@ -769,9 +896,9 @@ html.ios-install #app {
     position: absolute;
     top: 16px;
     right: 16px;
-    background: rgba(255,255,255,.1);
-    border: 1px solid rgba(255,255,255,.15);
-    color: #fff;
+    background: rgba(0,0,0,.06);
+    border: 1px solid rgba(0,0,0,.1);
+    color: #111;
     font-size: .82rem;
     font-weight: 600;
     padding: 6px 14px;
