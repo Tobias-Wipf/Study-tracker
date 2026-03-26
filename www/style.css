@@ -424,7 +424,7 @@ th.drag-over-right { box-shadow:inset -2px 0 0 var(--hsg-green); }
 td.status-cell { cursor:pointer; user-select:none; transition:background .15s; font-size:1.1rem; width:90px; }
 td.status-cell:hover { background:var(--hsg-green-light); }
 td.status-cell.s-none::after { content:"\2014"; color:#ccc; }
-td.status-cell.s-progress::after { content:"\270F"; }
+td.status-cell.s-progress::after { content:"\270F \FE0E"; color:#fff; background:#d4a843; border-radius:6px; display:inline-flex; align-items:center; justify-content:center; width:1.5em; height:1.4em; font-size:.85em; }
 td.status-cell.s-review::after { content:"\21BA"; color:#7c3aed; }
 td.status-cell.s-done::after { content:"\2705"; }
 td.status-cell.s-rep1::after { content:"\2781"; color:#2563eb; }

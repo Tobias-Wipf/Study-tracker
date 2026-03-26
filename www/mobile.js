@@ -132,6 +132,7 @@ function showIOSInstallGuide() {
         iosInstallLang = iosInstallLang === 'de' ? 'en' : 'de';
         showIOSInstallGuide();
     };
+
 }
 
 
@@ -819,7 +820,7 @@ function showMobileStatusDropdown(chip, subjectId, view) {
 
     var options = [
         { status: "done", label: t("done"), icon: "\u2713", color: "#00b87a" },
-        { status: "progress", label: t("in.progress"), icon: "\u270F", color: "#d4a843" },
+        { status: "progress", label: t("in.progress"), icon: "\u270F\uFE0E", color: "#d4a843" },
         { status: "review", label: t("review"), icon: "\u21BA", color: "#a78bfa" }
     ];
     var rn = loadRepCount();
@@ -845,7 +846,7 @@ function showMobileStatusDropdown(chip, subjectId, view) {
     options.forEach(function(o) {
         var opt = document.createElement("div");
         opt.className = "m-dropdown-option" + (o.status === cur ? " m-dropdown-selected" : "");
-        opt.innerHTML = '<span class="m-dropdown-icon" style="color:' + o.color + '">' + o.icon + '</span>' +
+        opt.innerHTML = '<span class="m-dropdown-icon" style="background:' + o.color + '; color:#fff">' + o.icon + '</span>' +
                         '<span class="m-dropdown-label">' + o.label + '</span>' +
                         (o.status === cur ? '<span class="m-dropdown-check">\u2713</span>' : '');
         opt.onclick = function() {
